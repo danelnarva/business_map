@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  padding: 20px;
+}
+
+.controls {
+  margin-bottom: 16px;
+}
+
+.layout {
+  display: flex;
+  gap: 20px;
+}
+
+.map-container {
+  flex: 2;
+}
+
+.chart-container {
+  flex: 1;
+  min-width: 300px;
+}

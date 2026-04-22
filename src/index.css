@@ -1,0 +1,61 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100%;
+  background: #f5f7fa;
+}
+
+.header {
+  padding: 1rem;
+  background: #1f2937;
+  color: white;
+}
+
+.header h1 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.map-section {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
