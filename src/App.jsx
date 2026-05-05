@@ -5,9 +5,8 @@ import "./App.css";
 import RankingBarrios from "./components/RankingBarrios";
 
 
-
 const INDICADORES = [
-  { value: "renta",                     label: "Renta media (€)" },
+  { value: "renta",                     label: "Renta media (€)" }, 
   { value: "poblacion",                 label: "Población" },
   { value: "edad_media",                label: "Edad media" },
   { value: "densidad",                  label: "Densidad (hab/100m²)" },
