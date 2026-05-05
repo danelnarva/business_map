@@ -30,15 +30,19 @@ export default function RankingBarrios({
   const valorMaximo = barriosOrdenados[0]?.[indicadorActivo] || 1;
 
   return (
-    <section className="ranking-card">
-      <div className="ranking-header">
+    <section className="mt-4 bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <h2>Ranking de barrios</h2>
-          <p>Top barrios según: {labelIndicador}</p>
+          <h2 className="text-lg font-bold text-slate-800">
+            Ranking de barrios
+          </h2>
+          <p className="text-sm text-slate-500">
+            Top barrios según: {labelIndicador}
+          </p>
         </div>
       </div>
 
-      <div className="ranking-list">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {barriosOrdenados.map((barrio, index) => {
           const valor = barrio[indicadorActivo];
           const porcentaje = (valor / valorMaximo) * 100;
@@ -48,18 +52,21 @@ export default function RankingBarrios({
               key={barrio.BARRIO}
               className="ranking-row"
               onClick={() => onBarrioClick(barrio)}
+               className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-500 transition-all text-left"
             >
-              <span className="ranking-position">{index + 1}</span>
+              <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">
+                {index + 1}
+              </span>
 
-              <div className="ranking-info">
-                <div className="ranking-top-line">
-                  <strong>{barrio.nombre}</strong>
-                  <span>{formatearValor(indicadorActivo, valor)}</span>
+            <div className="flex-1">
+              <div className="flex justify-between mb-1">
+                  <strong className="text-sm text-slate-800">{barrio.nombre}</strong>
+                  <span className="text-sm font-bold text-blue-600">{formatearValor(indicadorActivo, valor)}</span>
                 </div>
 
-                <div className="ranking-bar">
+                <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
                   <div
-                    className="ranking-bar-fill"
+                    className="h-full bg-blue-600 rounded-full"
                     style={{ width: `${porcentaje}%` }}
                   />
                 </div>

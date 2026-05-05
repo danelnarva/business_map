@@ -124,11 +124,11 @@ export default function Mapa({
   }
 
   return (
-    <div className="map-wrapper">
+    <div className="relative">
       <MapContainer
         center={[42.85, -2.68]}
         zoom={12}
-        style={{ height: "500px", width: "100%" }}
+        className="h-[500px] w-full rounded-2xl"
       >
         <TileLayer
           attribution="&copy; OpenStreetMap"
@@ -147,12 +147,12 @@ export default function Mapa({
         </Marker>
       </MapContainer>
 
-      <div className="map-legend">
-        <strong>{labelIndicador}</strong>
-        <div><span className="legend-color c1"></span> Bajo</div>
-        <div><span className="legend-color c2"></span> Medio-bajo</div>
-        <div><span className="legend-color c3"></span> Medio-alto</div>
-        <div><span className="legend-color c4"></span> Alto</div>
+      <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg text-xs text-slate-600">
+        <strong className="block mb-1 text-slate-800">{labelIndicador}</strong>
+        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-cyan-50 inline-block"></span> Bajo</div>
+        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-cyan-200 inline-block"></span> Medio-bajo</div>
+        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-sky-400 inline-block"></span> Medio-alto</div>
+        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-sky-700 inline-block"></span> Alto</div>
       </div>
     </div>
   );
