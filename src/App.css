@@ -283,3 +283,72 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+
+.evolution-card {
+  margin-top: 1rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+
+.evolution-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.evolution-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.2rem;
+}
+
+.evolution-header p {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.evolution-summary {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  text-align: right;
+}
+
+.evolution-summary span {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.evolution-summary strong {
+  font-size: 1.1rem;
+}
+
+.evolution-summary .positive {
+  color: #16a34a;
+}
+
+.evolution-summary .negative {
+  color: #dc2626;
+}
+
+.evolution-chart {
+  height: 280px;
+}
+
+@media (max-width: 700px) {
+  .evolution-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .evolution-summary {
+    width: 100%;
+    text-align: left;
+  }
+}

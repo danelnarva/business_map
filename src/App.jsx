@@ -3,6 +3,7 @@ import Mapa from "./components/Mapa";
 import Grafico from "./components/Grafico";
 import "./App.css";
 import RankingBarrios from "./components/RankingBarrios";
+import EvolucionBarrio from "./components/EvolucionBarrio";
 
 
 
@@ -27,23 +28,26 @@ export default function App() {
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [historicoData, setHistoricoData] = useState([]);
 
   useEffect(() => {
     async function cargarDatos() {
       try {
         setCargando(true);
 
-        const [geojsonRes, indicadoresRes] = await Promise.all([
+        const [geojsonRes, indicadoresRes, historicoRes] = await Promise.all([
           fetch("/data/barrios.geojson"),
           fetch("/data/indicadores.json"),
+          fetch("/data/historico.json"),
         ]);
 
-        if (!geojsonRes.ok || !indicadoresRes.ok) {
+        if (!geojsonRes.ok || !indicadoresRes.ok || !historicoRes.ok) {
           throw new Error("No se pudieron cargar los datos.");
         }
 
         setBarriosData(await geojsonRes.json());
         setIndicadores(await indicadoresRes.json());
+        setHistoricoData(await historicoRes.json());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -108,6 +112,12 @@ export default function App() {
         indicadorActivo={indicadorActivo}
         labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
         onBarrioClick={setBarrioSeleccionado}
+      />
+      <EvolucionBarrio
+        barrio={barrioSeleccionado}
+        historicoData={historicoData}
+        indicadorActivo={indicadorActivo}
+        labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
       />
     </div>
   );
