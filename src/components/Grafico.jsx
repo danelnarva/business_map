@@ -12,12 +12,30 @@ export default function Grafico({ barrio, indicadorActivo, indicadoresData, labe
     );
   }
 
-  //Calcular media de todos los barrios para el indicador activo
-  const media =
-    indicadoresData.length > 0
-      ? indicadoresData.reduce((sum, b) => sum + (b[indicadorActivo] ?? 0), 0) /
-        indicadoresData.length
-      : 0;
+  function calcularMediaCiudad() {
+    if (indicadoresData.length === 0) return 0;
+
+    if (indicadorActivo === "renta" || indicadorActivo === "edad_media") {
+      const totalPoblacion = indicadoresData.reduce(
+        (sum, b) => sum + (b.poblacion ?? 0),
+        0
+      );
+
+      return (
+        indicadoresData.reduce(
+          (sum, b) => sum + (b[indicadorActivo] ?? 0) * (b.poblacion ?? 0),
+          0
+        ) / totalPoblacion
+      );
+    }
+
+    return (
+      indicadoresData.reduce((sum, b) => sum + (b[indicadorActivo] ?? 0), 0) /
+      indicadoresData.length
+    );
+  }
+
+  const media = calcularMediaCiudad();
 
   const valorBarrio = barrio[indicadorActivo] ?? 0;
 
