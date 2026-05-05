@@ -35,15 +35,20 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
-      <h1>Vitoria-Gasteiz Business Map</h1>
+    <div className="min-h-screen bg-slate-200 pt-10 pb-8">
+      <div className="max-w-[1400px] mx-auto px-6">
 
-      <div className="controls">
-        <label htmlFor="indicador">Indicador: </label>
+      <h1 className="text-3xl font-semibold text-slate-800 mb-6">
+        Vitoria-Gasteiz Business Map
+      </h1>
+
+      <div className="flex items-center gap-4 mb-8 bg-slate-100 px-6 py-5 rounded-2xl shadow-sm border border-slate-200">
+        <label htmlFor="indicador" className="font-medium text-sm text-slate-600">Indicador: </label>
         <select
           id="indicador"
           value={indicadorActivo}
           onChange={(e) => setIndicadorActivo(e.target.value)}
+          className="px-3 py-1.5 border border-slate-300 rounded-lg text-sm bg-white cursor-pointer outline-none focus:border-blue-600"
         >
           {INDICADORES.map((ind) => (
             <option key={ind.value} value={ind.value}>
@@ -53,8 +58,8 @@ export default function App() {
         </select>
       </div>
 
-      <div className="layout">
-        <div className="map-container">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+        <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
           {barriosData && (
             <Mapa
               barriosData={barriosData}
@@ -65,7 +70,7 @@ export default function App() {
           )}
         </div>
 
-        <div className="chart-container">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex items-center justify-center">
           <Grafico
             barrio={barrioSeleccionado}
             indicadorActivo={indicadorActivo}
@@ -75,5 +80,6 @@ export default function App() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

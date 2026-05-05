@@ -93,7 +93,7 @@ export default function Mapa({barriosData, indicadoresData, indicadorActivo, onB
   }
 
   return (
-    <MapContainer center={[42.85, -2.68]} zoom={12} style={{ height: "500px", width: "100%" }}>
+    <MapContainer center={[42.85, -2.68]} zoom={12} className="h-[520px] w-full">
       <TileLayer attribution="&copy; OpenStreetMap" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
       <GeoJSON key={indicadorActivo} data={barriosData} style={style} onEachFeature={onEachFeature}/>
       <Marker position={[42.839227253054126, -2.6745152280911015]}>

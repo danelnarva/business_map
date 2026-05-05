@@ -6,7 +6,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Legend, Tooltip);
 export default function Grafico({ barrio, indicadorActivo, indicadoresData, labelIndicador }) {
   if (!barrio) {
     return (
-      <div className="chart-placeholder">
+      <div className="flex items-center justify-center h-full min-h-[300px] text-slate-400 text-sm text-center px-4">
         <p>🗺️ Haz clic en un barrio del mapa para ver sus datos.</p>
       </div>
     );
@@ -58,23 +58,63 @@ export default function Grafico({ barrio, indicadorActivo, indicadoresData, labe
 
   return (
     <div>
-      <h2>{barrio.nombre}</h2>
-      <p className="chart-subtitle">{labelIndicador}</p>
+      <h2 className="text-lg font-bold text-slate-800 mb-1">
+        {barrio.nombre}
+      </h2>
 
-      <div style={{ height: "220px", marginBottom: "1rem" }}>
+      <p className="text-xs text-slate-500 mb-3">
+        {labelIndicador}
+      </p>
+
+      <div className="h-[220px] mb-4">
         <Bar data={data} options={options} />
       </div>
 
       {/* Ficha resumen del barrio */}
-      <div className="barrio-stats">
-        <div className="stat"><span>👥 Población: </span><strong>{barrio.poblacion?.toLocaleString("es-ES")}</strong></div>
-        <div className="stat"><span>🏠 Viviendas: </span><strong>{barrio.num_viviendas?.toLocaleString("es-ES")}</strong></div>
-        <div className="stat"><span>💶 Renta media: </span><strong>{barrio.renta?.toLocaleString("es-ES")} €</strong></div>
-        <div className="stat"><span>🎂 Edad media: </span><strong>{barrio.edad_media} años</strong></div>
-        <div className="stat"><span>🏪 Comercios: </span><strong>{barrio.establecimientos_comercio}</strong></div>
-        <div className="stat"><span>🍽️ Hostelería: </span><strong>{barrio.establecimientos_hosteleria}</strong></div>
-        <div className="stat"><span>🏢 Servicios: </span><strong>{barrio.establecimientos_servicios}</strong></div>
-        <div className="stat"><span>📦 Total establec.: </span><strong>{barrio.establecimientos_total}</strong></div>
+      <div className="grid grid-cols-2 gap-2 mt-3">
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">👥 Población</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.poblacion?.toLocaleString("es-ES")}
+          </strong>
+        </div>
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">🏠 Viviendas</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.num_viviendas?.toLocaleString("es-ES")}
+          </strong>
+        </div>
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">💶 Renta media</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.renta?.toLocaleString("es-ES")} €
+          </strong>
+        </div>
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">🎂 Edad media</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.edad_media} años
+          </strong>
+        </div>
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">🏪 Comercios</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.establecimientos_comercio}
+          </strong>
+        </div>
+
+        <div className="bg-slate-50 rounded-lg p-2 flex flex-col">
+          <span className="text-[11px] text-slate-500">🍽️ Hostelería</span>
+          <strong className="text-sm text-slate-800">
+            {barrio.establecimientos_hosteleria}
+          </strong>
+        </div>
+
       </div>
     </div>
   );
