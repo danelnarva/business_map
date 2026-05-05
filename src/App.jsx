@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Mapa from "./components/Mapa";
 import Grafico from "./components/Grafico";
 import "./App.css";
+import RankingBarrios from "./components/RankingBarrios";
+
+
 
 const INDICADORES = [
   { value: "renta",                     label: "Renta media (€)" },
@@ -22,17 +25,42 @@ export default function App() {
   const [indicadorActivo, setIndicadorActivo] = useState("renta");
   const [barrioSeleccionado, setBarrioSeleccionado] = useState(null);
 
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     async function cargarDatos() {
-      const [geojsonRes, indicadoresRes] = await Promise.all([
-        fetch("/data/barrios.geojson"),
-        fetch("/data/indicadores.json"),
-      ]);
-      setBarriosData(await geojsonRes.json());
-      setIndicadores(await indicadoresRes.json());
+      try {
+        setCargando(true);
+
+        const [geojsonRes, indicadoresRes] = await Promise.all([
+          fetch("/data/barrios.geojson"),
+          fetch("/data/indicadores.json"),
+        ]);
+
+        if (!geojsonRes.ok || !indicadoresRes.ok) {
+          throw new Error("No se pudieron cargar los datos.");
+        }
+
+        setBarriosData(await geojsonRes.json());
+        setIndicadores(await indicadoresRes.json());
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setCargando(false);
+      }
     }
+
     cargarDatos();
   }, []);
+
+  if (cargando) {
+    return <div className="app">Cargando datos urbanos...</div>;
+  }
+
+  if (error) {
+    return <div className="app">Error: {error}</div>;
+  }
 
   return (
     <div className="app">
@@ -60,6 +88,7 @@ export default function App() {
               barriosData={barriosData}
               indicadoresData={indicadoresData}
               indicadorActivo={indicadorActivo}
+              labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
               onBarrioClick={setBarrioSeleccionado}
             />
           )}
@@ -74,6 +103,12 @@ export default function App() {
           />
         </div>
       </div>
+      <RankingBarrios
+        indicadoresData={indicadoresData}
+        indicadorActivo={indicadorActivo}
+        labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
+        onBarrioClick={setBarrioSeleccionado}
+      />
     </div>
   );
 }
