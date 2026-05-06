@@ -6,24 +6,36 @@ import "./App.css";
 
 function Home({ onNavigate }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-200 px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-200 px-6">
+
+      {/* TÍTULO */}
+      <h1 className="text-4xl font-bold text-slate-800 mb-10">
+        V-G BUSINESSMAP
+      </h1>
+
+      {/* BOTONES */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
 
-        <button className="bg-white p-8 rounded-2xl shadow text-xl font-semibold"
+        <button
           onClick={() => onNavigate("tiendas")}
+          className="bg-slate-300 text-slate-800 p-8 rounded-2xl shadow text-xl font-semibold 
+                     hover:bg-blue-600 hover:text-white cursor-pointer transition"
         >
           🏬 Tiendas
         </button>
 
-        <button className="bg-white p-8 rounded-2xl shadow text-xl font-semibold"
+        <button
           onClick={() => onNavigate("servicios")}
+          className="bg-slate-300 text-slate-800 p-8 rounded-2xl shadow text-xl font-semibold 
+                     hover:bg-blue-600 hover:text-white cursor-pointer transition"
         >
           🧰 Servicios
         </button>
 
         <button
           onClick={() => onNavigate("barrios")}
-          className="bg-blue-600 text-white p-8 rounded-2xl shadow text-xl font-semibold"
+          className="bg-slate-300 text-slate-800 p-8 rounded-2xl shadow text-xl font-semibold 
+                     hover:bg-blue-600 hover:text-white cursor-pointer transition"
         >
           🏙️ Barrios
         </button>
