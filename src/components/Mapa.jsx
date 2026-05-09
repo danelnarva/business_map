@@ -131,7 +131,7 @@ export default function Mapa({
         className="h-[500px] w-full rounded-2xl"
       >
         <TileLayer
-          attribution="&copy; OpenStreetMap"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
@@ -147,12 +147,12 @@ export default function Mapa({
         </Marker>
       </MapContainer>
 
-      <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg text-xs text-slate-600">
+      <div className="absolute bottom-4 left-4 z-[400] bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-slate-200 text-xs text-slate-600 pointer-events-none">
         <strong className="block mb-1 text-slate-800">{labelIndicador}</strong>
-        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-cyan-50 inline-block"></span> Bajo</div>
-        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-cyan-200 inline-block"></span> Medio-bajo</div>
-        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-sky-400 inline-block"></span> Medio-alto</div>
-        <div className="flex items-center gap-1"> <span className="w-3 h-2 rounded bg-sky-700 inline-block"></span> Alto</div>
+        <div className="flex items-center gap-2"> <span className="w-3 h-3 rounded-full bg-cyan-50 border border-slate-200"></span> Bajo</div>
+        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-cyan-200"></span> Medio-bajo</div>
+        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-sky-400"></span> Medio-alto</div>
+        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-sky-700"></span> Alto</div>
       </div>
     </div>
   );

@@ -109,9 +109,9 @@ export default function Tiendas({ volver }) {
 
   const imagenesUnicas = tiendasData
     ? [...new Set(tiendasData.features
-        .map(f => ICONOS_BASE[f.properties.shop])
-        .filter(img => img !== undefined)
-      )]
+      .map(f => ICONOS_BASE[f.properties.shop])
+      .filter(img => img !== undefined)
+    )]
     : [];
 
   return (
@@ -122,15 +122,15 @@ export default function Tiendas({ volver }) {
 
       <div className="flex flex-1 overflow-hidden">
         <div className="flex-1 relative">
-          <MapaTiendas 
+          <MapaTiendas
             tiendasData={tiendasData}
-            filtros={obtenerFiltrosReales()} 
+            filtros={obtenerFiltrosReales()}
             diccionarioIconos={ICONOS_BASE}
           />
         </div>
 
         <div className="w-72 bg-white p-4 overflow-y-auto border-l shadow-xl">
-          <button 
+          <button
             className="w-full border border-gray-300 rounded-md px-2 py-2 mb-6 text-xs font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors"
             onClick={() => setFiltrosActivos([])}
           >
@@ -139,15 +139,14 @@ export default function Tiendas({ volver }) {
 
           <div className="grid grid-cols-3 gap-y-6 gap-x-2">
             {imagenesUnicas.map(img => (
-              <div 
-                key={img} 
+              <div
+                key={img}
                 onClick={() => toggleFiltro(img)}
                 className="flex flex-col items-center cursor-pointer group"
               >
-                <div className={`p-1 rounded-full border-2 transition-all ${
-                    filtrosActivos.includes(img) 
-                      ? "border-blue-500 bg-blue-50 scale-110 shadow-md" 
-                      : "border-transparent group-hover:border-gray-100"
+                <div className={`p-1 rounded-full border-2 transition-all ${filtrosActivos.includes(img)
+                    ? "border-blue-500 bg-blue-50 scale-110 shadow-md"
+                    : "border-transparent group-hover:border-gray-100"
                   }`}>
                   <img
                     src={`/fotos_mapa/tiendas/${img}`}
@@ -155,9 +154,8 @@ export default function Tiendas({ volver }) {
                     className="w-10 h-10 object-contain"
                   />
                 </div>
-                <span className={`mt-1 text-[10px] text-center leading-tight font-medium ${
-                  filtrosActivos.includes(img) ? "text-blue-600 font-bold" : "text-gray-500"
-                }`}>
+                <span className={`mt-1 text-[10px] text-center leading-tight font-medium ${filtrosActivos.includes(img) ? "text-blue-600 font-bold" : "text-gray-500"
+                  }`}>
                   {ETIQUETAS[img] || "Tienda"}
                 </span>
               </div>

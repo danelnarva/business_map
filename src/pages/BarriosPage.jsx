@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Users, UserPlus, Home, Map as MapIcon, Store, Activity } from "lucide-react";
 import Mapa from "../components/Mapa";
-import Grafico from "../components/Grafico";
-import RankingBarrios from "../components/RankingBarrios";
-import EvolucionBarrio from "../components/EvolucionBarrio";
 
 const INDICADORES = [
   { value: "renta",                     label: "Renta media (€)" }, 
@@ -23,29 +21,27 @@ export default function BarriosPage() {
   const [indicadoresData, setIndicadores] = useState([]);
   const [indicadorActivo, setIndicadorActivo] = useState("renta");
   const [barrioSeleccionado, setBarrioSeleccionado] = useState(null);
+  const navigate = useNavigate();
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-  const [historicoData, setHistoricoData] = useState([]);
 
   useEffect(() => {
     async function cargarDatos() {
       try {
         setCargando(true);
 
-        const [geojsonRes, indicadoresRes, historicoRes] = await Promise.all([
+        const [geojsonRes, indicadoresRes] = await Promise.all([
           fetch("/data/barrios.geojson"),
           fetch("/data/indicadores.json"),
-          fetch("/data/historico.json"),
         ]);
 
-        if (!geojsonRes.ok || !indicadoresRes.ok || !historicoRes.ok) {
+        if (!geojsonRes.ok || !indicadoresRes.ok) {
           throw new Error("No se pudieron cargar los datos.");
         }
 
         setBarriosData(await geojsonRes.json());
         setIndicadores(await indicadoresRes.json());
-        setHistoricoData(await historicoRes.json());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -107,27 +103,64 @@ export default function BarriosPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex items-center justify-center">
-          <Grafico
-            barrio={barrioSeleccionado}
-            indicadorActivo={indicadorActivo}
-            indicadoresData={indicadoresData}
-            labelIndicador={INDICADORES.find(i => i.value === indicadorActivo)?.label}
-          />
+        <div className="flex flex-col gap-4">
+          {barrioSeleccionado ? (
+            <div className="flex flex-col gap-4">
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
+                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Densidad</h3>
+                <p className="text-2xl font-bold text-slate-800">
+                  {barrioSeleccionado.densidad ? barrioSeleccionado.densidad.toLocaleString("es-ES") : "Sin datos"} <span className="text-xs font-normal text-slate-500">hab/100m²</span>
+                </p>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-blue-50 text-blue-600 rounded-full">
+                  <UserPlus size={20} />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
+                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Habitantes</h3>
+                <p className="text-3xl font-bold text-slate-800">
+                  {barrioSeleccionado.poblacion ? (barrioSeleccionado.poblacion / 1000).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " mil" : "Sin datos"}
+                </p>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-emerald-50 text-emerald-600 rounded-full">
+                  <Users size={20} />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
+                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Valor Catastral Medio</h3>
+                <p className="text-3xl font-bold text-slate-800">
+                  {barrioSeleccionado.valor_catastral ? (barrioSeleccionado.valor_catastral / 1000).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " mil €" : "Sin datos"}
+                </p>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-purple-50 text-purple-600 rounded-full">
+                  <Home size={20} />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-2">
+                <button 
+                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/comercios`)}
+                  className="flex-1 bg-blue-50 text-blue-700 font-semibold py-3 px-4 rounded-xl hover:bg-blue-600 hover:text-white transition-colors border border-blue-100 hover:border-blue-600 flex flex-col items-center justify-center gap-1 shadow-sm"
+                >
+                  <Store size={24} />
+                  <span className="text-sm">Comercios</span>
+                </button>
+                <button 
+                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/salud`)}
+                  className="flex-1 bg-emerald-50 text-emerald-700 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-colors border border-emerald-100 hover:border-emerald-600 flex flex-col items-center justify-center gap-1 shadow-sm"
+                >
+                  <Activity size={24} />
+                  <span className="text-sm">Salud Demográfica</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col items-center justify-center h-full text-slate-500 text-center">
+              <MapIcon size={48} className="text-slate-300 mb-4" />
+              <p>Selecciona un barrio en el mapa para ver sus datos generales y explorar más detalles.</p>
+            </div>
+          )}
         </div>
       </div>
-      <RankingBarrios
-        indicadoresData={indicadoresData}
-        indicadorActivo={indicadorActivo}
-        labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
-        onBarrioClick={setBarrioSeleccionado}
-      />
-      <EvolucionBarrio
-        barrio={barrioSeleccionado}
-        historicoData={historicoData}
-        indicadorActivo={indicadorActivo}
-        labelIndicador={INDICADORES.find((i) => i.value === indicadorActivo)?.label}
-      />
     </div>
   </div>
   );
