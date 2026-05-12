@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MapaTiendas from "../components/MapaTiendas";
+import { useNavigate } from "react-router-dom";
 
 const ICONOS_BASE = {
   anti: "mapa_antiguedades.jpg",
@@ -84,14 +85,21 @@ const ETIQUETAS = {
 
 
 export default function TiendasPage() {
+  const navigate = useNavigate();
   const [tiendasData, setTiendasData] = useState(null);
   const [filtrosActivos, setFiltrosActivos] = useState([]);
+  const [barriosData, setBarriosData] = useState(null);
 
   useEffect(() => {
-    fetch("/data/comercios_clasificados.geojson")
-      .then(res => res.json())
-      .then(setTiendasData);
-  }, []);
+  fetch("/data/comercios_clasificados.geojson")
+    .then(res => res.json())
+    .then(setTiendasData);
+
+  fetch("/data/barrios.geojson")
+    .then(res => res.json())
+    .then(setBarriosData);
+
+}, []);
 
   const obtenerShopsPorImagen = (nombreImagen) => {
     return Object.keys(ICONOS_BASE).filter(shop => ICONOS_BASE[shop] === nombreImagen);
@@ -108,6 +116,10 @@ export default function TiendasPage() {
   const obtenerFiltrosReales = () => {
     return filtrosActivos.flatMap(img => obtenerShopsPorImagen(img));
   };
+
+  function seleccionarTodos() {
+    setFiltrosActivos(imagenesUnicas);
+  }
 
   const imagenesUnicas = tiendasData
     ? [...new Set(tiendasData.features
@@ -128,16 +140,30 @@ export default function TiendasPage() {
             tiendasData={tiendasData}
             filtros={obtenerFiltrosReales()}
             diccionarioIconos={ICONOS_BASE}
+            barriosData={barriosData}
+            onBarrioClick={(barrio) => navigate(`/tiendasBarrio/${barrio.BARRIO}`)}
           />
         </div>
 
         <div className="w-72 bg-white p-4 overflow-y-auto border-l shadow-xl">
-          <button
-            className="w-full border border-gray-300 rounded-md px-2 py-2 mb-6 text-xs font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors"
-            onClick={() => setFiltrosActivos([])}
-          >
-            Limpiar filtros
-          </button>
+          
+          <div className="flex gap-2 mb-6">
+            
+            <button
+              className="flex-1 border border-blue-300 text-blue-600 rounded-md px-2 py-2 text-xs font-bold uppercase tracking-wider hover:bg-blue-50 transition-colors"
+              onClick={seleccionarTodos}
+            >
+              Seleccionar todos
+            </button>
+
+            <button
+              className="flex-1 border border-gray-300 rounded-md px-2 py-2 text-xs font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors"
+              onClick={() => setFiltrosActivos([])}
+            >
+              Limpiar filtros
+            </button>
+
+          </div>
 
           <div className="grid grid-cols-3 gap-y-6 gap-x-2">
             {imagenesUnicas.map(img => (
