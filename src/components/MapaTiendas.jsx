@@ -1,4 +1,6 @@
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup } from "react-leaflet";
+import {MapContainer, TileLayer, GeoJSON, Marker, Popup, Tooltip } from "react-leaflet";
+
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 
 import "leaflet/dist/leaflet.css";
@@ -8,15 +10,36 @@ export default function MapaTiendas({
   filtros,
   diccionarioIconos,
   barriosData,
-  onBarrioClick
+  onBarrioClick,
+  barrioSeleccionado,
+  mostrarTodasSiNoHayFiltros = false
 }) {
 
-  const tiendasFiltradas = tiendasData?.features.filter(f =>
-    filtros.includes(f.properties.shop)
-  );
+  const mapRef = useRef();
+
+  const tiendasFiltradas = tiendasData?.features.filter(f => {
+
+    const tieneIcono =
+      diccionarioIconos[f.properties.shop];
+
+    if (
+      filtros.length === 0 &&
+      !mostrarTodasSiNoHayFiltros
+    ) {
+      return false;
+    }
+
+    const pasaFiltro =
+      filtros.length === 0 ||
+      filtros.includes(f.properties.shop);
+
+    return tieneIcono && pasaFiltro;
+
+  });
 
   const crearIcono = (tipoShop) => {
-    const nombreImagen = diccionarioIconos[tipoShop] || "default.png";
+    const nombreImagen =
+      diccionarioIconos[tipoShop] || "default.png";
 
     return L.icon({
       iconUrl: `/fotos_mapa/tiendas/${nombreImagen}`,
@@ -27,16 +50,42 @@ export default function MapaTiendas({
     });
   };
 
+useEffect(() => {
+
+  if (
+    barrioSeleccionado &&
+    mapRef.current
+  ) {
+
+    const layer =
+      L.geoJSON(barrioSeleccionado);
+
+    const bounds =
+      layer.getBounds();
+
+    mapRef.current.fitBounds(bounds, {
+      padding: [20, 20]
+    });
+
+    mapRef.current.setMaxBounds(bounds);
+
+  }
+
+}, [barrioSeleccionado]);
+
   return (
     <MapContainer
       center={[42.8467, -2.6716]}
       zoom={14}
       className="h-full w-full"
+      whenCreated={(map) => {
+        mapRef.current = map;
+      }}
     >
 
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {barriosData && (
+      {barriosData && !barrioSeleccionado && (
         <GeoJSON
           data={barriosData}
           style={() => ({
@@ -52,27 +101,53 @@ export default function MapaTiendas({
         />
       )}
 
-      {tiendasFiltradas?.map((t, i) => (
-        <Marker
-          key={i}
-          position={[
-            t.geometry.coordinates[1],
-            t.geometry.coordinates[0]
-          ]}
-          icon={crearIcono(t.properties.shop)}
-        >
-          <Popup>
-            <div className="text-center font-sans">
-              <strong className="block border-b mb-1">
-                {t.properties.name || "Comercio"}
-              </strong>
+      {barrioSeleccionado && (
+        <GeoJSON
+          data={barrioSeleccionado}
+          style={() => ({
+            color: "#2563eb",
+            weight: 3,
+            fillOpacity: 0.15
+          })}
+        />
+      )}
 
-              <span className="text-xs text-gray-500 uppercase">
-                {t.properties.shop}
-              </span>
-            </div>
-          </Popup>
-        </Marker>
+      {tiendasFiltradas?.map((t, i) => (
+<Marker
+  key={i}
+  position={[
+    t.geometry.coordinates[1],
+    t.geometry.coordinates[0]
+  ]}
+  icon={crearIcono(t.properties.shop)}
+>
+
+{barrioSeleccionado && (
+  <Tooltip
+    direction="top"
+    offset={[0, -25]}
+    opacity={1}
+    permanent={false}
+  >
+    {t.properties.name}
+  </Tooltip>
+)}
+
+  <Popup>
+    <div className="text-center font-sans">
+
+      <strong className="block border-b mb-1">
+        {t.properties.name || "Comercio"}
+      </strong>
+
+      <span className="text-xs text-gray-500 uppercase">
+        {t.properties.shop}
+      </span>
+
+    </div>
+  </Popup>
+
+</Marker>
       ))}
 
     </MapContainer>
