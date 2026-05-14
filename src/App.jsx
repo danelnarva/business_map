@@ -17,8 +17,8 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/Barrios" element={<BarriosPage />} />
         <Route path="/barrios/:barrioId" element={<BarrioDashboardPage />}>
-          <Route path="comercios" element={<BarrioComerciosView />} />
-          <Route path="salud" element={<BarrioSaludView />} />
+          <Route path="economia" element={<BarrioComerciosView />} />
+          <Route path="demografia" element={<BarrioSaludView />} />
         </Route>
         <Route path="/Tiendas" element={<TiendasPage />} />
         <Route path="/tiendasBarrio/:id" element={<TiendasBarrio/>} />

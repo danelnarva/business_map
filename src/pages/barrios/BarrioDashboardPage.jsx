@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useParams, Outlet, useNavigate, useLocation, Link } from "react-router-dom";
+import { ArrowLeft, MapPin } from "lucide-react";
 
 export default function BarrioDashboardPage() {
   const { barrioId } = useParams();
@@ -15,32 +15,24 @@ export default function BarrioDashboardPage() {
     async function cargarDatos() {
       try {
         setCargando(true);
-        const [geojsonRes, indicadoresRes, historicoRes] = await Promise.all([
-          fetch("/data/barrios.geojson"),
-          fetch("/data/indicadores.json"),
-          fetch("/data/historico.json"),
-        ]);
+        const geojsonRes = await fetch("/data/barrios_con_datos.geojson");
 
-        if (!geojsonRes.ok || !indicadoresRes.ok || !historicoRes.ok) {
+        if (!geojsonRes.ok) {
           throw new Error("No se pudieron cargar los datos.");
         }
 
         const barriosData = await geojsonRes.json();
-        const indicadoresData = await indicadoresRes.json();
-        const historicoData = await historicoRes.json();
-
         const idNumerico = parseInt(barrioId, 10);
-        const barrioInfo = indicadoresData.find((b) => b.BARRIO === idNumerico);
+        const barrioFeature = barriosData.features.find((f) => f.properties.BARRIO === idNumerico);
 
-        if (!barrioInfo) {
+        if (!barrioFeature) {
           throw new Error("Barrio no encontrado");
         }
 
+        const barrioInfo = { ...barrioFeature.properties, nombre: barrioFeature.properties.TEXTO };
+
         setDatosContexto({
           barrio: barrioInfo,
-          barriosData,
-          indicadoresData,
-          historicoData,
         });
       } catch (err) {
         setError(err.message);
@@ -58,50 +50,65 @@ export default function BarrioDashboardPage() {
   let titulo = "Idoneidad del Barrio";
   let showRightButton = null;
 
-  if (path.endsWith("comercios")) {
-    titulo = "Establecimientos por Sectores y Economía";
+  if (path.endsWith("economia")) {
+    titulo = "Economía y Patrimonio";
     showRightButton = (
       <button 
-        onClick={() => navigate(`/barrios/${barrioId}/salud`)}
-        className="bg-blue-600 text-white font-medium py-1.5 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition text-sm"
+        onClick={() => navigate(`/barrios/${barrioId}/demografia`)}
+        className="bg-emerald-600 text-white font-medium py-2 px-5 rounded-xl shadow-lg hover:bg-emerald-500 transition text-sm"
       >
-        Ir a Salud
+        Ir a Demografía
       </button>
     );
-  } else if (path.endsWith("salud")) {
-    titulo = "Salud Demográfica del Barrio";
+  } else if (path.endsWith("demografia")) {
+    titulo = "Demografía del Barrio";
     showRightButton = (
       <button 
-        onClick={() => navigate(`/barrios/${barrioId}/comercios`)}
-        className="bg-blue-600 text-white font-medium py-1.5 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition text-sm"
+        onClick={() => navigate(`/barrios/${barrioId}/economia`)}
+        className="bg-emerald-600 text-white font-medium py-2 px-5 rounded-xl shadow-lg hover:bg-emerald-500 transition text-sm"
       >
-        Ir a Comercios
+        Ir a Economía
       </button>
     );
   }
 
+  const barrioObj = datosContexto.barrio;
+
   return (
-    <div className="min-h-screen bg-slate-100 font-sans">
-      <header className="bg-white py-4 px-6 flex items-center justify-between shadow-sm border-b border-slate-200 sticky top-0 z-10">
-        <button 
-          onClick={() => navigate("/Barrios")}
-          className="text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition flex items-center justify-center p-2 rounded-full"
-        >
-          <ArrowLeft size={24} />
-        </button>
+    <div className="min-h-screen bg-slate-900 pt-10 pb-12 font-sans">
+      <div className="max-w-6xl mx-auto px-6">
+        
+        {/* Navegación */}
+        <Link to="/Barrios" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition font-medium mb-6">
+          <ArrowLeft size={18} />
+          Volver a Barrios
+        </Link>
 
-        <h1 className="text-xl font-semibold text-slate-800 text-center flex-1">
-          {titulo} - {datosContexto.barrio.nombre}
-        </h1>
-
-        <div className="w-[120px] flex justify-end">
-           {showRightButton}
+        {/* Encabezado del Dashboard */}
+        <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700 p-6 md:p-8 mb-8">
+          <div className="flex flex-col md:flex-row justify-between md:items-center gap-6">
+            <div className="flex items-center gap-4">
+              <div className="bg-slate-700/50 p-4 rounded-xl text-emerald-400">
+                <MapPin size={32} />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{titulo}</h1>
+                <p className="text-slate-400 text-lg flex items-center gap-2">
+                  <span className="font-semibold text-white">{barrioObj.nombre}</span>
+                </p>
+              </div>
+            </div>
+            {/* Controles extra / Botón superior derecho */}
+            <div className="flex items-center gap-4 self-start md:self-auto">
+              {showRightButton}
+            </div>
+          </div>
         </div>
-      </header>
 
-      <main className="p-6 max-w-[1400px] mx-auto">
-        <Outlet context={datosContexto} />
-      </main>
+        {/* CONTENIDO PRINCIPAL (Renderizado por las rutas hijas) */}
+        <Outlet context={{ barrio: barrioObj }} />
+
+      </div>
     </div>
   );
 }

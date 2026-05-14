@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 function formatearValor(indicador, valor) {
@@ -14,34 +14,20 @@ function formatearValor(indicador, valor) {
   }
 
   if (indicador === "densidad") {
-    return `${valor} hab/100m²`;
+    return `${valor} hab/km²`;
   }
 
   return valor.toLocaleString("es-ES");
 }
 
-function calcularCuartiles(valores) {
-  const ordenados = [...valores].sort((a, b) => a - b);
-
-  const getPercentil = (p) => {
-    const index = Math.floor((ordenados.length - 1) * p);
-    return ordenados[index];
-  };
-
-  return {
-    q1: getPercentil(0.25),
-    q2: getPercentil(0.5),
-    q3: getPercentil(0.75),
-  };
-}
-
-function getColorPorCuartiles(valor, cuartiles) {
-  if (valor == null) return "#cbd5e1";
-
-  if (valor >= cuartiles.q3) return "#1d4ed8";
-  if (valor >= cuartiles.q2) return "#38bdf8";
-  if (valor >= cuartiles.q1) return "#99f6e4";
-  return "#ecfeff";
+function getColorContinuo(valor, min, max) {
+  if (valor == null) return "#e2e8f0"; // slate-200 para datos nulos
+  if (min === max) return "hsl(221, 83%, 53%)"; // Valor fijo si no hay variación
+  
+  const ratio = (valor - min) / (max - min);
+  // L (Lightness) va de 95% (más claro) a 30% (más oscuro)
+  const lightness = 95 - (ratio * 65); 
+  return `hsl(221, 83%, ${lightness}%)`;
 }
 
 export default function Mapa({
@@ -56,10 +42,11 @@ export default function Mapa({
   }, [indicadoresData]);
 
   const valoresIndicador = indicadoresData
-  .map((b) => b[indicadorActivo])
-  .filter((v) => typeof v === "number");
+    .map((b) => b[indicadorActivo])
+    .filter((v) => typeof v === "number");
 
-  const cuartiles = calcularCuartiles(valoresIndicador);
+  const min = valoresIndicador.length > 0 ? Math.min(...valoresIndicador) : 0;
+  const max = valoresIndicador.length > 0 ? Math.max(...valoresIndicador) : 100;
 
   function style(feature) {
     const id = feature.properties.BARRIO;
@@ -67,11 +54,11 @@ export default function Mapa({
     const valor = datos?.[indicadorActivo];
 
     return {
-      fillColor: getColorPorCuartiles(valor, cuartiles),
+      fillColor: getColorContinuo(valor, min, max),
       weight: 1,
       opacity: 1,
       color: "white",
-      fillOpacity: 0.75,
+      fillOpacity: 0.85,
     };
   }
 
@@ -110,14 +97,14 @@ export default function Mapa({
         e.target.setStyle({
           weight: 2,
           color: "#0f172a",
-          fillOpacity: 0.9,
+          fillOpacity: 1,
         });
       },
       mouseout: (e) => {
         e.target.setStyle({
           weight: 1,
           color: "white",
-          fillOpacity: 0.75,
+          fillOpacity: 0.85,
         });
       },
     });
@@ -141,18 +128,19 @@ export default function Mapa({
           style={style}
           onEachFeature={onEachFeature}
         />
-
-        <Marker position={[42.839227253054126, -2.6745152280911015]}>
-          <Popup>Escuela de Ingeniería de Vitoria-Gasteiz</Popup>
-        </Marker>
       </MapContainer>
 
-      <div className="absolute bottom-4 left-4 z-[400] bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-slate-200 text-xs text-slate-600 pointer-events-none">
-        <strong className="block mb-1 text-slate-800">{labelIndicador}</strong>
-        <div className="flex items-center gap-2"> <span className="w-3 h-3 rounded-full bg-cyan-50 border border-slate-200"></span> Bajo</div>
-        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-cyan-200"></span> Medio-bajo</div>
-        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-sky-400"></span> Medio-alto</div>
-        <div className="flex items-center gap-2 mt-1"> <span className="w-3 h-3 rounded-full bg-sky-700"></span> Alto</div>
+      <div className="absolute bottom-4 left-4 z-[400] bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-slate-200 text-xs text-slate-600 pointer-events-none min-w-[240px]">
+        <strong className="block mb-3 text-slate-800 font-bold uppercase tracking-wider">{labelIndicador}</strong>
+        
+        {/* Barra de degradado */}
+        <div className="w-full h-3 rounded-full mb-2 shadow-inner" style={{ background: 'linear-gradient(to right, hsl(221, 83%, 95%), hsl(221, 83%, 30%))' }}></div>
+        
+        {/* Etiquetas Min/Max */}
+        <div className="flex justify-between font-semibold text-slate-500">
+          <span>{formatearValor(indicadorActivo, min)}</span>
+          <span>{formatearValor(indicadorActivo, max)}</span>
+        </div>
       </div>
     </div>
   );

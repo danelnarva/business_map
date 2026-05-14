@@ -1,19 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Users, UserPlus, Home, Map as MapIcon, Store, Activity } from "lucide-react";
+import { Users, UserPlus, Home, Map as MapIcon, Landmark, Activity, Car, ArrowLeft } from "lucide-react";
 import Mapa from "../components/Mapa";
 
 const INDICADORES = [
   { value: "renta",                     label: "Renta media (€)" }, 
   { value: "poblacion",                 label: "Población" },
   { value: "edad_media",                label: "Edad media" },
-  { value: "densidad",                  label: "Densidad (hab/100m²)" },
+  { value: "densidad",                  label: "Densidad (hab/km²)" },
   { value: "valor_catastral",           label: "Valor catastral medio (€)" },
   { value: "num_viviendas",             label: "Nº de viviendas" },
-  { value: "establecimientos_total",    label: "Total establecimientos" },
-  { value: "establecimientos_comercio", label: "Comercios" },
-  { value: "establecimientos_hosteleria", label: "Hostelería" },
-  { value: "establecimientos_servicios",  label: "Servicios" },
+  { value: "vehiculos",                 label: "Vehículos" },
 ];
 
 export default function BarriosPage() {
@@ -31,17 +28,41 @@ export default function BarriosPage() {
       try {
         setCargando(true);
 
-        const [geojsonRes, indicadoresRes] = await Promise.all([
-          fetch("/data/barrios.geojson"),
-          fetch("/data/indicadores.json"),
-        ]);
+        const geojsonRes = await fetch("/data/barrios_con_datos.geojson");
 
-        if (!geojsonRes.ok || !indicadoresRes.ok) {
+        if (!geojsonRes.ok) {
           throw new Error("No se pudieron cargar los datos.");
         }
 
-        setBarriosData(await geojsonRes.json());
-        setIndicadores(await indicadoresRes.json());
+        const data = await geojsonRes.json();
+        setBarriosData(data);
+        
+        // Extraer indicadores de las propiedades del geojson
+        const extractedIndicadores = data.features.map(f => {
+          const p = f.properties;
+          
+          let poblacionTotal = 0;
+          if (p.poblacionPorRango && p.poblacionPorRango["2025"]) {
+            const p25 = p.poblacionPorRango["2025"];
+            poblacionTotal = (p25["0-15"]?.total || 0) + (p25["16-64"]?.total || 0) + (p25[">64"]?.total || 0);
+          }
+
+          const densidad = p.superficie && poblacionTotal ? Math.round(poblacionTotal / p.superficie) : null;
+          
+          return {
+            BARRIO: p.BARRIO,
+            nombre: p.TEXTO,
+            poblacion: poblacionTotal,
+            renta: p.renta?.familiar?.["2023"] || null,
+            edad_media: p.edad_media?.["2025"] || null,
+            valor_catastral: p.vivienda?.valor_catastral?.["2025"] || null,
+            num_viviendas: p.vivienda?.cantidad?.["2025"] || null,
+            vehiculos: p.vehiculos?.["2024"] || null,
+            densidad: densidad
+          };
+        });
+
+        setIndicadores(extractedIndicadores);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -61,20 +82,20 @@ export default function BarriosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-200 pt-10 pb-8">
+    <div className="min-h-screen bg-slate-900 pt-10 pb-8 font-sans">
       <div className="max-w-[1400px] mx-auto px-6">
 
-      <h1 className="text-3xl font-semibold text-slate-800 mb-6">
-        Vitoria-Gasteiz Business Map
+      <h1 className="text-3xl font-bold text-white mb-6 tracking-tight">
+        V-G BUSINESSMAP
       </h1>
 
-      <div className="flex items-center gap-4 mb-8 bg-slate-100 px-6 py-5 rounded-2xl shadow-sm border border-slate-200">
-        <label htmlFor="indicador" className="font-medium text-sm text-slate-600">Indicador: </label>
+      <div className="flex items-center gap-4 mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
+        <label htmlFor="indicador" className="font-medium text-sm text-slate-300">Indicador: </label>
         <select
           id="indicador"
           value={indicadorActivo}
           onChange={(e) => setIndicadorActivo(e.target.value)}
-          className="px-3 py-1.5 border border-slate-300 rounded-lg text-sm bg-white cursor-pointer outline-none focus:border-blue-600"
+          className="px-3 py-1.5 border border-slate-600 rounded-lg text-sm bg-slate-700 text-white cursor-pointer outline-none focus:border-emerald-500"
         >
           {INDICADORES.map((ind) => (
             <option key={ind.value} value={ind.value}>
@@ -83,15 +104,16 @@ export default function BarriosPage() {
           ))}
         </select>
 
-        <Link to="/" className="mb-0 text-sm text-blue-600 hover:underline">
-          Volver
+        <Link to="/" className="ml-auto flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm">
+          <ArrowLeft size={18} />
+          Volver al Inicio
         </Link>
 
       </div>
 
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
-        <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+        <div className="bg-slate-800 rounded-2xl overflow-hidden shadow-xl border border-slate-700">
           {barriosData && (
             <Mapa
               barriosData={barriosData}
@@ -106,56 +128,66 @@ export default function BarriosPage() {
         <div className="flex flex-col gap-4">
           {barrioSeleccionado ? (
             <div className="flex flex-col gap-4">
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
-                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Densidad</h3>
-                <p className="text-2xl font-bold text-slate-800">
-                  {barrioSeleccionado.densidad ? barrioSeleccionado.densidad.toLocaleString("es-ES") : "Sin datos"} <span className="text-xs font-normal text-slate-500">hab/100m²</span>
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700 p-5 relative shadow-lg">
+                <h3 className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wide">Densidad</h3>
+                <p className="text-2xl font-bold text-white">
+                  {barrioSeleccionado.densidad ? barrioSeleccionado.densidad.toLocaleString("es-ES") : "Sin datos"} <span className="text-xs font-normal text-slate-400">hab/km²</span>
                 </p>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-blue-50 text-blue-600 rounded-full">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-blue-500/20 text-blue-400 rounded-full">
                   <UserPlus size={20} />
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
-                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Habitantes</h3>
-                <p className="text-3xl font-bold text-slate-800">
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700 p-5 relative shadow-lg">
+                <h3 className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wide">Habitantes</h3>
+                <p className="text-3xl font-bold text-white">
                   {barrioSeleccionado.poblacion ? (barrioSeleccionado.poblacion / 1000).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " mil" : "Sin datos"}
                 </p>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-emerald-50 text-emerald-600 rounded-full">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-emerald-500/20 text-emerald-400 rounded-full">
                   <Users size={20} />
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 relative shadow-sm">
-                <h3 className="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wide">Valor Catastral Medio</h3>
-                <p className="text-3xl font-bold text-slate-800">
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700 p-5 relative shadow-lg">
+                <h3 className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wide">Valor Catastral Medio</h3>
+                <p className="text-3xl font-bold text-white">
                   {barrioSeleccionado.valor_catastral ? (barrioSeleccionado.valor_catastral / 1000).toLocaleString("es-ES", { maximumFractionDigits: 1 }) + " mil €" : "Sin datos"}
                 </p>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-purple-50 text-purple-600 rounded-full">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-purple-500/20 text-purple-400 rounded-full">
                   <Home size={20} />
+                </div>
+              </div>
+              
+              <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-slate-700 p-5 relative shadow-lg">
+                <h3 className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wide">Vehículos</h3>
+                <p className="text-3xl font-bold text-white">
+                  {barrioSeleccionado.vehiculos ? barrioSeleccionado.vehiculos.toLocaleString("es-ES") : "Sin datos"}
+                </p>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-amber-500/20 text-amber-400 rounded-full">
+                  <Car size={20} />
                 </div>
               </div>
 
               <div className="flex gap-3 mt-2">
                 <button 
-                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/comercios`)}
-                  className="flex-1 bg-blue-50 text-blue-700 font-semibold py-3 px-4 rounded-xl hover:bg-blue-600 hover:text-white transition-colors border border-blue-100 hover:border-blue-600 flex flex-col items-center justify-center gap-1 shadow-sm"
+                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/economia`)}
+                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex flex-col items-center justify-center gap-1 shadow-lg group"
                 >
-                  <Store size={24} />
-                  <span className="text-sm">Comercios</span>
+                  <Landmark size={24} className="group-hover:scale-110 transition-transform" />
+                  <span className="text-sm">Economía y Patrimonio</span>
                 </button>
                 <button 
-                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/salud`)}
-                  className="flex-1 bg-emerald-50 text-emerald-700 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-colors border border-emerald-100 hover:border-emerald-600 flex flex-col items-center justify-center gap-1 shadow-sm"
+                  onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/demografia`)}
+                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex flex-col items-center justify-center gap-1 shadow-lg group"
                 >
-                  <Activity size={24} />
-                  <span className="text-sm">Salud Demográfica</span>
+                  <Users size={24} className="group-hover:scale-110 transition-transform" />
+                  <span className="text-sm">Demografía</span>
                 </button>
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col items-center justify-center h-full text-slate-500 text-center">
-              <MapIcon size={48} className="text-slate-300 mb-4" />
+            <div className="bg-slate-800/50 rounded-2xl p-6 shadow-sm border border-slate-700 flex flex-col items-center justify-center h-full text-slate-400 text-center backdrop-blur-sm">
+              <MapIcon size={48} className="text-slate-600 mb-4" />
               <p>Selecciona un barrio en el mapa para ver sus datos generales y explorar más detalles.</p>
             </div>
           )}
