@@ -85,9 +85,11 @@ export default function BarriosPage() {
     <div className="min-h-screen bg-slate-900 pt-10 pb-8 font-sans">
       <div className="max-w-[1400px] mx-auto px-6">
 
-      <h1 className="text-3xl font-bold text-white mb-6 tracking-tight">
-        V-G BUSINESSMAP
-      </h1>
+      <Link to="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
+        <h1 className="text-3xl font-bold text-white tracking-tight">
+          V-G BUSINESSMAP
+        </h1>
+      </Link>
 
       <div className="flex items-center gap-4 mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
         <label htmlFor="indicador" className="font-medium text-sm text-slate-300">Indicador: </label>

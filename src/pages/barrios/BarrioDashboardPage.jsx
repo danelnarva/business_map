@@ -78,11 +78,20 @@ export default function BarrioDashboardPage() {
     <div className="min-h-screen bg-slate-900 pt-10 pb-12 font-sans">
       <div className="max-w-6xl mx-auto px-6">
         
-        {/* Navegación */}
-        <Link to="/Barrios" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition font-medium mb-6">
-          <ArrowLeft size={18} />
-          Volver a Barrios
+        {/* Título Principal */}
+        <Link to="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
+          <h1 className="text-3xl font-bold text-white tracking-tight">
+            V-G BUSINESSMAP
+          </h1>
         </Link>
+
+        {/* Navegación */}
+        <div className="mb-6">
+          <Link to="/Barrios" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition font-medium">
+            <ArrowLeft size={18} />
+            Volver a Barrios
+          </Link>
+        </div>
 
         {/* Encabezado del Dashboard */}
         <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700 p-6 md:p-8 mb-8">
