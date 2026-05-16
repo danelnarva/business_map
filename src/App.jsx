@@ -8,6 +8,7 @@ import BarrioDashboardPage from "./pages/barrios/BarrioDashboardPage";
 import BarrioComerciosView from "./pages/barrios/BarrioComerciosView";
 import BarrioSaludView from "./pages/barrios/BarrioSaludView";
 import TiendasBarrio from "./pages/TiendasBarrio";
+import ServiciosBarrios from "./pages/ServiciosBarrios";
 import "./App.css";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/Tiendas" element={<TiendasPage />} />
         <Route path="/tiendasBarrio/:id" element={<TiendasBarrio/>} />
         <Route path="/Servicios" element={<ServiciosPage />} />
+        <Route path="/serviciosBarrios/:id" element={<ServiciosBarrios/>} />
         <Route path="/Tendencias" element={<TendenciasPage />} />
       </Routes>
     </BrowserRouter>

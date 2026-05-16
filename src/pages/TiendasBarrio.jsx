@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { ArrowLeft } from "lucide-react";
 import MapaTiendas from "../components/MapaTiendas";
 import { ICONOS_BASE, TRADUCCIONES_TIPO } from "./tiendas/tiendasConfig";
 
@@ -10,6 +10,7 @@ export default function TiendasBarrio() {
 
   const [tiendasData, setTiendasData] = useState(null);
   const [barrioGeo, setBarrioGeo] = useState(null);
+  const [mostrarTodos, setMostrarTodos] = useState(false);
   
 
   useEffect(() => {
@@ -54,43 +55,73 @@ export default function TiendasBarrio() {
     tipos[tipo] = (tipos[tipo] || 0) + 1;
   });
 
-  return (
-    <div className="h-screen flex flex-col">
+  const tiposArray = Object.entries(tipos)
+  .sort((a, b) => b[1] - a[1]);
 
-      <div className="p-4 bg-white shadow z-10">
+  const tiposVisibles = mostrarTodos
+    ? tiposArray
+    : tiposArray.slice(0, 6);
 
-        <Link
-          to="/Tiendas"
-          className="text-sm text-blue-600 hover:underline"
-        >
-          Volver
-        </Link>
+return (
+  <div className="min-h-screen bg-slate-900 font-sans text-white">
+    
+    <div className="p-6">
 
-        <h1 className="mt-2 text-2xl font-bold text-gray-800">
+      <Link
+        to="/Tiendas"
+        className="inline-flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm"
+      >
+        <ArrowLeft size={18} />
+        Volver a Tiendas
+      </Link>
+
+      <div className="mt-6 bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 shadow-xl">
+        
+        <h1 className="text-3xl font-bold text-white">
           {barrioGeo?.properties?.TEXTO}
         </h1>
 
-        <p className="mt-2 text-gray-600">
-          Total tiendas: {
-            tiendasData?.features.length || 0
-          }
+        <p className="mt-2 text-slate-400">
+          Total tiendas: {tiendasData?.features.length || 0}
         </p>
 
-        <h2 className="mt-4 font-semibold">
+        <h2 className="mt-6 font-semibold text-slate-200 uppercase tracking-wide text-sm">
           Tipos de tiendas
         </h2>
 
-        <ul className="mt-2 text-sm grid grid-cols-2 gap-x-8 gap-y-1">
-          {Object.entries(tipos).map(([tipo, count]) => (
-            <li key={tipo}>
-              {TRADUCCIONES_TIPO[tipo] || tipo}: {count}
+        <ul className="mt-4 text-sm grid grid-cols-2 gap-x-8 gap-y-2">
+            {tiposVisibles.map(([tipo, count]) => (            <li
+              key={tipo}
+              className="bg-slate-700/40 border border-slate-600 rounded-lg px-3 py-2 text-slate-300"
+            >
+              {TRADUCCIONES_TIPO[tipo] || tipo}:{" "}
+              <span className="font-bold text-white">{count}</span>
             </li>
           ))}
         </ul>
+        {tiposArray.length > 6 && (
+
+          <button
+            onClick={() =>
+              setMostrarTodos(!mostrarTodos)
+            }
+            className="mt-4 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-all"
+          >
+
+            {mostrarTodos
+              ? "Mostrar menos"
+              : `Mostrar más (${tiposArray.length - 6})`
+            }
+
+          </button>
+
+        )}
+
       </div>
+    </div>
 
-      <div className="flex-1">
-
+    <div className="flex-1 px-6 pb-6">
+      <div className="h-[75vh] rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
         <MapaTiendas
           tiendasData={tiendasData}
           filtros={[]}
@@ -98,8 +129,8 @@ export default function TiendasBarrio() {
           barrioSeleccionado={barrioGeo}
           mostrarTodasSiNoHayFiltros={true}
         />
-
       </div>
     </div>
-  );
+  </div>
+);
 }

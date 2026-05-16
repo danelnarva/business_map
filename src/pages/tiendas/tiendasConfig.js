@@ -41,7 +41,10 @@ export const ICONOS_BASE = {
   lottery: "mapa_loteria.jpg",
   tattoo: "mapa_tatuajes.jpg",
 
-  hardware: "mapa_bici.jpg"
+  hardware: "mapa_bici.jpg",
+  car_parts: "mapa_consesionario.jpg",
+  fireplace: "mapa_chimenea.png",
+  car_repair: "mapa_consesionario.jpg"
 };
 
 export const TRADUCCIONES_TIPO = {
@@ -87,7 +90,10 @@ export const TRADUCCIONES_TIPO = {
   lottery: "Lotería",
   tattoo: "Tatuajes",
 
-  hardware: "Herramientas"
+  hardware: "Herramientas",
+  car_parts: "Piezas de coche",
+  fireplace: "Chimeneas",
+  car_repair: "Reparaciones de coches"
 };
 
 export const ETIQUETAS = {
@@ -123,5 +129,7 @@ export const ETIQUETAS = {
   "mapa_sastreria_costureria.jpg": "Sastrería",
   "mapa_copisteria.jpg": "Copistería",
   "mapa_loteria.jpg": "Lotería",
-  "mapa_tatuajes.jpg": "Tatuajes"
+  "mapa_tatuajes.jpg": "Tatuajes",
+
+  "mapa_chimenea.png": "Chimeneas"
 };

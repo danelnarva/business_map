@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import MapaTiendas from "../components/MapaTiendas";
 import { useNavigate } from "react-router-dom";
 import { ICONOS_BASE, ETIQUETAS } from "./tiendas/tiendasConfig";
+import { ArrowLeft } from "lucide-react";
 
 export default function TiendasPage() {
   const navigate = useNavigate();
@@ -48,62 +49,84 @@ export default function TiendasPage() {
     )]
     : [];
 
-  return (
-    <div className="h-screen flex flex-col font-sans text-gray-800">
-        <Link to="/" className="mb-0 text-sm text-blue-600 hover:underline">
-          Volver
-        </Link>
+return (
+  <div className="min-h-screen bg-slate-900 font-sans text-white">
+    
+    <div className="max-w-[1600px] mx-auto px-6 pt-8 pb-6">
 
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 relative">
-          <MapaTiendas
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm mb-6"
+      >
+        <ArrowLeft size={18} />
+        Volver al Inicio
+      </Link>
+
+      <div className="flex flex-1 overflow-hidden gap-6">
+
+      <div className="flex-1 relative min-h-[700px] h-[85vh] bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">          <MapaTiendas
             tiendasData={tiendasData}
             filtros={obtenerFiltrosReales()}
             diccionarioIconos={ICONOS_BASE}
             barriosData={barriosData}
-            onBarrioClick={(barrio) => navigate(`/tiendasBarrio/${barrio.BARRIO}`)}
+            onBarrioClick={(barrio) =>
+              navigate(`/tiendasBarrio/${barrio.BARRIO}`)
+            }
           />
         </div>
 
-        <div className="w-72 bg-white p-4 overflow-y-auto border-l shadow-xl">
+        <div className="w-80 bg-slate-800/80 backdrop-blur-sm p-5 overflow-y-auto border border-slate-700 rounded-2xl shadow-xl">
           
+          <h2 className="text-lg font-bold text-white mb-5">
+            Filtros
+          </h2>
+
           <div className="flex gap-2 mb-6">
-            
+
             <button
-              className="flex-1 border border-blue-300 text-blue-600 rounded-md px-2 py-2 text-xs font-bold uppercase tracking-wider hover:bg-blue-50 transition-colors"
+              className="flex-1 border border-emerald-500 text-emerald-400 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all"
               onClick={seleccionarTodos}
             >
               Seleccionar todos
             </button>
 
             <button
-              className="flex-1 border border-gray-300 rounded-md px-2 py-2 text-xs font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors"
+              className="flex-1 border border-slate-600 text-slate-300 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-slate-700 transition-all"
               onClick={() => setFiltrosActivos([])}
             >
-              Limpiar filtros
+              Limpiar
             </button>
 
           </div>
 
-          <div className="grid grid-cols-3 gap-y-6 gap-x-2">
-            {imagenesUnicas.map(img => (
+          <div className="grid grid-cols-3 gap-y-6 gap-x-3">
+            {imagenesUnicas.map((img) => (
               <div
                 key={img}
                 onClick={() => toggleFiltro(img)}
                 className="flex flex-col items-center cursor-pointer group"
               >
-                <div className={`p-1 rounded-full border-2 transition-all ${filtrosActivos.includes(img)
-                    ? "border-blue-500 bg-blue-50 scale-110 shadow-md"
-                    : "border-transparent group-hover:border-gray-100"
-                  }`}>
+                <div
+                  className={`p-2 rounded-2xl border transition-all ${
+                    filtrosActivos.includes(img)
+                      ? "border-emerald-500 bg-emerald-500/10 scale-110 shadow-lg"
+                      : "border-slate-700 bg-slate-700/40 hover:border-slate-500"
+                  }`}
+                >
                   <img
                     src={`/fotos_mapa/tiendas/${img}`}
                     alt={img}
                     className="w-10 h-10 object-contain"
                   />
                 </div>
-                <span className={`mt-1 text-[10px] text-center leading-tight font-medium ${filtrosActivos.includes(img) ? "text-blue-600 font-bold" : "text-gray-500"
-                  }`}>
+
+                <span
+                  className={`mt-2 text-[11px] text-center leading-tight font-medium ${
+                    filtrosActivos.includes(img)
+                      ? "text-emerald-400 font-bold"
+                      : "text-slate-400"
+                  }`}
+                >
                   {ETIQUETAS[img] || "Tienda"}
                 </span>
               </div>
@@ -112,5 +135,6 @@ export default function TiendasPage() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

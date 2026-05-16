@@ -169,21 +169,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Jardinería Abeto",
-        "shop": "garden_centre",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6357653,
-          42.865644950000004
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "ALDI",
         "shop": "supermarket",
         "id_barrio": 26
@@ -709,21 +694,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Viveros Eskalmendi",
-        "shop": "garden_centre",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.64029935,
-          42.8755989
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Skramer",
         "shop": "furniture",
         "id_barrio": 24
@@ -778,21 +748,6 @@
         "coordinates": [
           -2.6727949,
           42.8415073
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "EUROCAM",
-        "shop": "car_repair",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.7714874,
-          42.824028999999996
         ]
       }
     },
@@ -1579,7 +1534,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": null,
+        "name": "Chimeneas Inmoar",
         "shop": "fireplace",
         "id_barrio": 27
       },
@@ -1693,21 +1648,6 @@
         "coordinates": [
           -2.7084537500000003,
           42.855051950000004
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": null,
-        "shop": "convenience",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6171659,
-          42.87687975
         ]
       }
     },
@@ -1969,21 +1909,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Simply",
-        "shop": "supermarket",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6825271,
-          42.8450076
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "BM",
         "shop": "supermarket",
         "id_barrio": 4
@@ -2173,21 +2098,6 @@
         "coordinates": [
           -2.6723796,
           42.8460984
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "NonBait opariak",
-        "shop": "gift",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6724474,
-          42.8469921
         ]
       }
     },
@@ -2398,21 +2308,6 @@
         "coordinates": [
           -2.6654861,
           42.8388261
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "La Vitoriana",
-        "shop": "bakery",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6615634,
-          42.8475554
         ]
       }
     },
@@ -4894,21 +4789,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Yoel",
-        "shop": "clothes",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6672441,
-          42.8459487
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Harrord",
         "shop": "clothes",
         "id_barrio": 2
@@ -4918,21 +4798,6 @@
         "coordinates": [
           -2.6682392,
           42.8460923
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "General Óptica",
-        "shop": "optician",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6678315,
-          42.8460254
         ]
       }
     },
@@ -5203,21 +5068,6 @@
         "coordinates": [
           -2.6892789,
           42.8632939
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Viajes Ecuador",
-        "shop": "travel_agency",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6735888,
-          42.8466782
         ]
       }
     },
@@ -5749,36 +5599,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Arróniz Uniformes",
-        "shop": "tailor",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6804938,
-          42.8541322
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Peluquería Rebeca Zabala",
-        "shop": "hairdresser",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6804729,
-          42.8542269
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Estanco Ruiz",
         "shop": "tobacco",
         "id_barrio": 7
@@ -6283,36 +6103,6 @@
         "coordinates": [
           -2.6814918,
           42.8502738
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "La Brasileña",
-        "shop": "coffee",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6813082,
-          42.8502442
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Tabacos Koket",
-        "shop": "tobacco",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6815396,
-          42.8502792
         ]
       }
     },
@@ -14014,21 +13804,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": null,
-        "shop": "kiosk",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6747069,
-          42.8502497
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Avenida Optica",
         "shop": "optician",
         "id_barrio": 4
@@ -14563,21 +14338,6 @@
         "coordinates": [
           -2.667198,
           42.8442899
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": null,
-        "shop": "vacant",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6717622,
-          42.8526499
         ]
       }
     },
@@ -15274,21 +15034,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Naturgy",
-        "shop": "no",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.7707306,
-          42.8242696
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Artepan Zabalgana",
         "shop": "bakery",
         "id_barrio": 29
@@ -15493,51 +15238,6 @@
         "coordinates": [
           -2.6750424,
           42.8485925
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Farmacia del Electrodoméstico",
-        "shop": "appliance",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6733821,
-          42.8539139
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Dyper",
-        "shop": "clothes",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6733684,
-          42.8538125
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Lavado Engrase Santo Domingo",
-        "shop": "car_repair",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.673368,
-          42.8537774
         ]
       }
     },
@@ -15808,21 +15508,6 @@
         "coordinates": [
           -2.6691158,
           42.8479158
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Kurrusko",
-        "shop": "bakery",
-        "id_barrio": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.6687641,
-          42.8506808
         ]
       }
     },

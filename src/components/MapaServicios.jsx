@@ -5,8 +5,8 @@ import L from "leaflet";
 
 import "leaflet/dist/leaflet.css";
 
-export default function MapaTiendas({
-  tiendasData,
+export default function MapaServicios({
+  serviciosData,
   filtros,
   diccionarioIconos,
   barriosData,
@@ -17,34 +17,36 @@ export default function MapaTiendas({
 
   const mapRef = useRef();
 
-  const tiendasFiltradas = tiendasData?.features.filter(f => {
+const serviciosFiltrados = serviciosData?.features.filter(f => {
 
-    const tieneIcono =
-      diccionarioIconos[f.properties.shop];
+  const tipo = f.properties.amenity;
 
-    if (
-      filtros.length === 0 &&
-      !mostrarTodasSiNoHayFiltros
-    ) {
-      return false;
-    }
+  const tieneIcono =
+    diccionarioIconos[tipo];
 
-    const pasaFiltro =
-      filtros.length === 0 ||
-      filtros.includes(f.properties.shop);
+  if (
+    filtros.length === 0 &&
+    !mostrarTodasSiNoHayFiltros
+  ) {
+    return false;
+  }
 
-    return tieneIcono && pasaFiltro;
+  const pasaFiltro =
+    filtros.length === 0 ||
+    filtros.includes(tipo);
 
-  });
+  return tieneIcono && pasaFiltro;
 
-const crearIcono = (tipoShop) => {
+});
+
+const crearIcono = (tipoServicio) => {
   const nombreImagen =
-    diccionarioIconos[tipoShop] || "default.png";
+    diccionarioIconos[tipoServicio] || "default.png";
 
   return L.divIcon({
     html: `
       <img
-        src="/fotos_mapa/tiendas/${nombreImagen}"
+        src="/fotos_mapa/servicios/${nombreImagen}"
         class="w-[22px] h-[22px] rounded-full object-cover"
       />
     `,
@@ -117,14 +119,14 @@ useEffect(() => {
         />
       )}
 
-      {tiendasFiltradas?.map((t, i) => (
+      {serviciosFiltrados?.map((t, i) => (
 <Marker
   key={i}
   position={[
     t.geometry.coordinates[1],
     t.geometry.coordinates[0]
   ]}
-  icon={crearIcono(t.properties.shop)}
+  icon={crearIcono(t.properties.amenity)}
 >
 
 {barrioSeleccionado && (
@@ -142,11 +144,11 @@ useEffect(() => {
     <div className="text-center font-sans">
 
       <strong className="block border-b mb-1">
-        {t.properties.name || "Comercio"}
+        {t.properties.name || "Servicio"}
       </strong>
 
       <span className="text-xs text-gray-500 uppercase">
-        {t.properties.shop}
+        {t.properties.amenity}
       </span>
 
     </div>
