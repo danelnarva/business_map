@@ -86,7 +86,7 @@ export default function LandingPage() {
 
       {/* Logos Patrocinadores en Desktop (bottom right) */}
       <div className="hidden lg:flex absolute bottom-8 right-8 z-20 items-center gap-6 bg-white/95 backdrop-blur-md px-8 py-5 rounded-2xl shadow-2xl border border-white">
-        <img src="/ehu_upv.png" alt="UPV/EHU" className="h-10 md:h-12 object-contain" />
+        <img src={`${import.meta.env.BASE_URL}ehu_upv.png`} alt="UPV/EHU" className="h-10 md:h-12 object-contain" />
         <div className="w-px h-12 bg-slate-200"></div>
         <img src={`${import.meta.env.BASE_URL}mobility_lab.png`} alt="Mobility LAB Vitoria-Gasteiz" className="h-12 md:h-14 object-contain" />
       </div>

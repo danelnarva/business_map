@@ -44,7 +44,7 @@ const crearIcono = (tipoShop) => {
   return L.divIcon({
     html: `
       <img
-        src="/fotos_mapa/tiendas/${nombreImagen}"
+        src="${import.meta.env.BASE_URL}fotos_mapa/tiendas/${nombreImagen}"
         class="w-[22px] h-[22px] rounded-full object-cover"
       />
     `,

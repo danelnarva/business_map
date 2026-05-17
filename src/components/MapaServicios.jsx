@@ -46,7 +46,7 @@ const crearIcono = (tipoServicio) => {
   return L.divIcon({
     html: `
       <img
-        src="/fotos_mapa/servicios/${nombreImagen}"
+        src="${import.meta.env.BASE_URL}fotos_mapa/servicios/${nombreImagen}"
         class="w-[22px] h-[22px] rounded-full object-cover"
       />
     `,

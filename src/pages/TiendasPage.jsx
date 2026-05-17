@@ -123,7 +123,7 @@ export default function TiendasPage() {
                     }`}
                   >
                     <img
-                      src={`/fotos_mapa/tiendas/${img}`}
+                      src={`${import.meta.env.BASE_URL}fotos_mapa/tiendas/${img}`}
                       alt={img}
                       className="w-10 h-10 object-contain"
                     />

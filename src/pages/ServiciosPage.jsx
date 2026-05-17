@@ -124,7 +124,7 @@ export default function ServiciosPage() {
                     }`}
                   >
                     <img
-                      src={`/fotos_mapa/servicios/${img}`}
+                      src={`${import.meta.env.BASE_URL}fotos_mapa/servicios/${img}`}
                       alt={img}
                       className="w-10 h-10 object-contain"
                     />
