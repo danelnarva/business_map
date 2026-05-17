@@ -1,4 +1,4 @@
-import {MapContainer, TileLayer, GeoJSON, Marker, Popup, Tooltip } from "react-leaflet";
+import {MapContainer, TileLayer, GeoJSON, Marker, Popup, Tooltip, useMap } from "react-leaflet";
 
 import { useEffect, useRef } from "react";
 import L from "leaflet";
@@ -14,8 +14,6 @@ export default function MapaTiendas({
   barrioSeleccionado,
   mostrarTodasSiNoHayFiltros = false
 }) {
-
-  const mapRef = useRef();
 
   const tiendasFiltradas = tiendasData?.features.filter(f => {
 
@@ -54,41 +52,39 @@ const crearIcono = (tipoShop) => {
     popupAnchor: [0, -11]
   });
 };
+function CentrarBarrio({ barrio }) {
 
-useEffect(() => {
+  const map = useMap();
 
-  if (
-    barrioSeleccionado &&
-    mapRef.current
-  ) {
+  useEffect(() => {
 
-    const layer =
-      L.geoJSON(barrioSeleccionado);
+    if (!barrio) return;
 
-    const bounds =
-      layer.getBounds();
+    const layer = L.geoJSON(barrio);
 
-    mapRef.current.fitBounds(bounds, {
-      padding: [20, 20]
+    const bounds = layer.getBounds();
+
+    map.fitBounds(bounds, {
+      padding: [40, 40]
     });
 
-    mapRef.current.setMaxBounds(bounds);
+  }, [barrio, map]);
 
-  }
-
-}, [barrioSeleccionado]);
+  return null;
+}
 
   return (
     <MapContainer
       center={[42.8467, -2.6716]}
       zoom={14}
       className="w-full h-full z-0"
-      whenCreated={(map) => {
-        mapRef.current = map;
-      }}
     >
 
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+      {barrioSeleccionado && (
+        <CentrarBarrio barrio={barrioSeleccionado} />
+      )}
 
       {barriosData && !barrioSeleccionado && (
         <GeoJSON

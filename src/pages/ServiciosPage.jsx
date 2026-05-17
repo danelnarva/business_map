@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Flame } from "lucide-react";
 import MapaServicios from "../components/MapaServicios";
 import { ICONOS_SERVICIOS, ETIQUETAS_SERVICIOS } from "./servicios/serviciosConfig";
 
@@ -57,11 +57,19 @@ export default function ServiciosPage() {
         <Link to="/" className="flex items-center gap-3 mb-6 hover:opacity-80 transition-opacity w-fit">
           <img src={`${import.meta.env.BASE_URL}logo_vg.png`} alt="V-G Business Map Logo" className="w-9 h-9 object-contain" />
           <h1 className="text-3xl font-bold text-white tracking-tight">
-            V-G Business Map
+            V-G Business Map, Servicios
           </h1>
         </Link>
 
-        <div className="flex items-center justify-end mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
+          <Link
+          to="/MapaCalor"
+          className="flex items-center gap-2 text-sm font-bold text-orange-300 hover:text-white bg-orange-500/10 border border-orange-500/40 px-4 py-2 rounded-xl hover:bg-orange-500/20 transition-all"
+        >
+          <Flame size={18} />
+          Mapas de calor
+        </Link>
+          
           <Link
             to="/"
             className="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm"

@@ -9,6 +9,7 @@ import BarrioComerciosView from "./pages/barrios/BarrioComerciosView";
 import BarrioSaludView from "./pages/barrios/BarrioSaludView";
 import TiendasBarrio from "./pages/TiendasBarrio";
 import ServiciosBarrios from "./pages/ServiciosBarrios";
+import MapaCalorPage from "./pages/MapaCalorPage"; 
 import "./App.css";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/tiendasBarrio/:id" element={<TiendasBarrio/>} />
         <Route path="/Servicios" element={<ServiciosPage />} />
         <Route path="/serviciosBarrios/:id" element={<ServiciosBarrios/>} />
+        <Route path="/MapaCalor" element={<MapaCalorPage />} />
         <Route path="/Tendencias" element={<TendenciasPage />} />
       </Routes>
     </BrowserRouter>
