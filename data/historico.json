@@ -1,0 +1,56 @@
+[
+  {
+    "BARRIO": 1,
+    "nombre": "Arriaga-Lakua",
+    "datos": [
+      {
+        "anio": 2021,
+        "renta": 22500,
+        "poblacion": 17100,
+        "edad_media": 38.2,
+        "establecimientos_total": 410
+      },
+      {
+        "anio": 2022,
+        "renta": 23200,
+        "poblacion": 17400,
+        "edad_media": 38.5,
+        "establecimientos_total": 425
+      },
+      {
+        "anio": 2023,
+        "renta": 23800,
+        "poblacion": 17650,
+        "edad_media": 38.9,
+        "establecimientos_total": 435
+      }
+    ]
+  },
+  {
+    "BARRIO": 2,
+    "nombre": "Aranbizkarra",
+    "datos": [
+      {
+        "anio": 2021,
+        "renta": 16300,
+        "poblacion": 19800,
+        "edad_media": 36.1,
+        "establecimientos_total": 352
+      },
+      {
+        "anio": 2022,
+        "renta": 16800,
+        "poblacion": 20100,
+        "edad_media": 36.4,
+        "establecimientos_total": 366
+      },
+      {
+        "anio": 2023,
+        "renta": 17200,
+        "poblacion": 20450,
+        "edad_media": 36.8,
+        "establecimientos_total": 379
+      }
+    ]
+  }
+]
