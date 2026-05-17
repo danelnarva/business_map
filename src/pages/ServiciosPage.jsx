@@ -54,9 +54,10 @@ export default function ServiciosPage() {
       
       <div className="max-w-[1600px] mx-auto px-6 pt-8 pb-6">
 
-        <Link to="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
+        <Link to="/" className="flex items-center gap-3 mb-6 hover:opacity-80 transition-opacity w-fit">
+          <img src="/logo_vg.png" alt="V-G Business Map Logo" className="w-9 h-9 object-contain" />
           <h1 className="text-3xl font-bold text-white tracking-tight">
-            V-G BUSINESSMAP
+            V-G Business Map
           </h1>
         </Link>
 

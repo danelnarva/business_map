@@ -13,11 +13,14 @@ export default function LandingPage() {
 
         <div className="flex-1 flex flex-col justify-center">
           
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-8">
-            <span className="bg-gradient-to-br from-emerald-400 via-green-400 to-teal-500 text-transparent bg-clip-text drop-shadow-sm">
-              V-G BUSINESSMAP
-            </span>
-          </h1>
+          <div className="flex items-center gap-4 mb-8">
+            <img src="/logo_vg.png" alt="V-G Business Map Logo" className="w-14 h-14 object-contain" />
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight">
+              <span className="bg-gradient-to-br from-emerald-400 via-green-400 to-teal-500 text-transparent bg-clip-text drop-shadow-sm">
+                V-G Business Map
+              </span>
+            </h1>
+          </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-snug">
             Explora tu oportunidad de negocio en Vitoria-Gasteiz
