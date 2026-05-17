@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import BarriosPage from "./pages/BarriosPage";
 import TiendasPage from "./pages/TiendasPage";
@@ -13,7 +13,7 @@ import "./App.css";
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/Barrios" element={<BarriosPage />} />
@@ -27,6 +27,6 @@ export default function App() {
         <Route path="/serviciosBarrios/:id" element={<ServiciosBarrios/>} />
         <Route path="/Tendencias" element={<TendenciasPage />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
