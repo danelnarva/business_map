@@ -91,26 +91,27 @@ export default function BarriosPage() {
         </h1>
       </Link>
 
-      <div className="flex items-center gap-4 mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
-        <label htmlFor="indicador" className="font-medium text-sm text-slate-300">Indicador: </label>
-        <select
-          id="indicador"
-          value={indicadorActivo}
-          onChange={(e) => setIndicadorActivo(e.target.value)}
-          className="px-3 py-1.5 border border-slate-600 rounded-lg text-sm bg-slate-700 text-white cursor-pointer outline-none focus:border-emerald-500"
-        >
-          {INDICADORES.map((ind) => (
-            <option key={ind.value} value={ind.value}>
-              {ind.label}
-            </option>
-          ))}
-        </select>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <label htmlFor="indicador" className="font-medium text-sm text-slate-300 shrink-0">Indicador: </label>
+          <select
+            id="indicador"
+            value={indicadorActivo}
+            onChange={(e) => setIndicadorActivo(e.target.value)}
+            className="flex-1 sm:flex-initial px-3 py-1.5 border border-slate-600 rounded-lg text-sm bg-slate-700 text-white cursor-pointer outline-none focus:border-emerald-500"
+          >
+            {INDICADORES.map((ind) => (
+              <option key={ind.value} value={ind.value}>
+                {ind.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <Link to="/" className="ml-auto flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm">
+        <Link to="/" className="flex items-center justify-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm w-full sm:w-auto">
           <ArrowLeft size={18} />
           Volver al Inicio
         </Link>
-
       </div>
 
 
@@ -170,20 +171,20 @@ export default function BarriosPage() {
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-2">
+              <div className="flex flex-col sm:flex-row gap-3 mt-2">
                 <button 
                   onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/economia`)}
-                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex flex-col items-center justify-center gap-1 shadow-lg group"
+                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3.5 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex items-center justify-center gap-2.5 shadow-lg group"
                 >
-                  <Landmark size={24} className="group-hover:scale-110 transition-transform" />
+                  <Landmark size={18} className="group-hover:scale-110 transition-transform" />
                   <span className="text-sm">Economía y Patrimonio</span>
                 </button>
                 <button 
                   onClick={() => navigate(`/barrios/${barrioSeleccionado.BARRIO}/demografia`)}
-                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex flex-col items-center justify-center gap-1 shadow-lg group"
+                  className="flex-1 bg-slate-800 text-slate-300 font-semibold py-3.5 px-4 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-slate-600 hover:border-emerald-500 flex items-center justify-center gap-2.5 shadow-lg group"
                 >
-                  <Users size={24} className="group-hover:scale-110 transition-transform" />
-                  <span className="text-sm">Demografía</span>
+                  <Users size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="text-sm">Demografía del Barrio</span>
                 </button>
               </div>
             </div>

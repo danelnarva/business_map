@@ -6,7 +6,7 @@ export default function LandingPage() {
     <div className="min-h-screen flex flex-col lg:flex-row bg-slate-900 font-sans overflow-hidden">
       
       {/* Panel Izquierdo (Contenido) */}
-      <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col px-8 py-12 md:px-16 lg:px-20 h-screen overflow-y-auto z-10 relative">
+      <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col px-8 py-12 md:px-16 lg:px-20 min-h-screen lg:h-screen lg:overflow-y-auto z-10 relative justify-between">
         
         {/* Glow de fondo */}
         <div className="absolute top-[-10%] left-[-20%] w-[500px] h-[500px] bg-emerald-600/20 rounded-full blur-[120px] pointer-events-none" />
@@ -61,6 +61,14 @@ export default function LandingPage() {
 
           </div>
         </div>
+
+        {/* Patrocinadores en móvil (se muestra inline al final del scroll) */}
+        <div className="mt-12 lg:hidden flex items-center justify-center gap-6 bg-white/95 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-white w-full max-w-sm mx-auto">
+          <img src="/ehu_upv.png" alt="UPV/EHU" className="h-8 object-contain" />
+          <div className="w-px h-10 bg-slate-200"></div>
+          <img src="/mobility_lab.png" alt="Mobility LAB Vitoria-Gasteiz" className="h-10 object-contain" />
+        </div>
+
       </div>
 
       {/* Panel Derecho (Imagen de Fondo) */}
@@ -73,8 +81,8 @@ export default function LandingPage() {
         <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
       </div>
 
-      {/* Logos Patrocinadores (Bottom Right) */}
-      <div className="absolute bottom-8 right-8 z-20 flex items-center gap-6 bg-white/95 backdrop-blur-md px-8 py-5 rounded-2xl shadow-2xl border border-white">
+      {/* Logos Patrocinadores en Desktop (bottom right) */}
+      <div className="hidden lg:flex absolute bottom-8 right-8 z-20 items-center gap-6 bg-white/95 backdrop-blur-md px-8 py-5 rounded-2xl shadow-2xl border border-white">
         <img src="/ehu_upv.png" alt="UPV/EHU" className="h-10 md:h-12 object-contain" />
         <div className="w-px h-12 bg-slate-200"></div>
         <img src="/mobility_lab.png" alt="Mobility LAB Vitoria-Gasteiz" className="h-12 md:h-14 object-contain" />

@@ -2,26 +2,16 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-
 import MapaServicios from "../components/MapaServicios";
-
-import {
-  ICONOS_SERVICIOS,
-  ETIQUETAS_SERVICIOS
-} from "./servicios/serviciosConfig";
+import { ICONOS_SERVICIOS, ETIQUETAS_SERVICIOS } from "./servicios/serviciosConfig";
 
 export default function ServiciosPage() {
-
   const navigate = useNavigate();
-
   const [serviciosData, setServiciosData] = useState(null);
-
   const [filtrosActivos, setFiltrosActivos] = useState([]);
-
   const [barriosData, setBarriosData] = useState(null);
 
   useEffect(() => {
-
     fetch("/data/servicios_clasificados.geojson")
       .then(res => res.json())
       .then(setServiciosData);
@@ -29,34 +19,22 @@ export default function ServiciosPage() {
     fetch("/data/barrios.geojson")
       .then(res => res.json())
       .then(setBarriosData);
-
   }, []);
 
   const obtenerTiposPorImagen = (nombreImagen) => {
-
-    return Object.keys(ICONOS_SERVICIOS)
-      .filter(tipo =>
-        ICONOS_SERVICIOS[tipo] === nombreImagen
-      );
-
+    return Object.keys(ICONOS_SERVICIOS).filter(tipo => ICONOS_SERVICIOS[tipo] === nombreImagen);
   };
 
   function toggleFiltro(nombreImagen) {
-
     setFiltrosActivos(prev =>
       prev.includes(nombreImagen)
         ? prev.filter(img => img !== nombreImagen)
         : [...prev, nombreImagen]
     );
-
   }
 
   const obtenerFiltrosReales = () => {
-
-    return filtrosActivos.flatMap(img =>
-      obtenerTiposPorImagen(img)
-    );
-
+    return filtrosActivos.flatMap(img => obtenerTiposPorImagen(img));
   };
 
   function seleccionarTodos() {
@@ -66,17 +44,14 @@ export default function ServiciosPage() {
   const imagenesUnicas = serviciosData
     ? [...new Set(
         serviciosData.features
-          .map(f =>
-            ICONOS_SERVICIOS[f.properties.amenity]
-          )
+          .map(f => ICONOS_SERVICIOS[f.properties.amenity])
           .filter(Boolean)
       )]
     : [];
 
   return (
-
     <div className="min-h-screen bg-slate-900 font-sans text-white">
-
+      
       <div className="max-w-[1600px] mx-auto px-6 pt-8 pb-6">
 
         <Link to="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
@@ -95,10 +70,9 @@ export default function ServiciosPage() {
           </Link>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
 
-          <div className="flex-1 relative min-h-[700px] h-[85vh] bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
-
+          <div className="w-full lg:flex-1 relative h-[50vh] lg:min-h-[700px] lg:h-[85vh] bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl order-1 lg:order-1">
             <MapaServicios
               serviciosData={serviciosData}
               filtros={obtenerFiltrosReales()}
@@ -108,11 +82,10 @@ export default function ServiciosPage() {
                 navigate(`/serviciosBarrios/${barrio.BARRIO}`)
               }
             />
-
           </div>
 
-          <div className="w-80 bg-slate-800/80 backdrop-blur-sm p-5 overflow-y-auto border border-slate-700 rounded-2xl shadow-xl">
-
+          <div className="w-full lg:w-80 bg-slate-800/80 backdrop-blur-sm p-5 border border-slate-700 rounded-2xl shadow-xl order-2 lg:order-2">
+            
             <h2 className="text-lg font-bold text-white mb-5">
               Filtros
             </h2>
@@ -120,14 +93,14 @@ export default function ServiciosPage() {
             <div className="flex gap-2 mb-6">
 
               <button
-                className="flex-1 border border-emerald-500 text-emerald-400 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all"
+                className="flex-1 border border-emerald-500 text-emerald-400 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all cursor-pointer"
                 onClick={seleccionarTodos}
               >
                 Seleccionar todos
               </button>
 
               <button
-                className="flex-1 border border-slate-600 text-slate-300 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-slate-700 transition-all"
+                className="flex-1 border border-slate-600 text-slate-300 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider hover:bg-slate-700 transition-all cursor-pointer"
                 onClick={() => setFiltrosActivos([])}
               >
                 Limpiar
@@ -135,16 +108,13 @@ export default function ServiciosPage() {
 
             </div>
 
-            <div className="grid grid-cols-3 gap-y-6 gap-x-3">
-
+            <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-3 gap-y-6 gap-x-3">
               {imagenesUnicas.map((img) => (
-
                 <div
                   key={img}
                   onClick={() => toggleFiltro(img)}
                   className="flex flex-col items-center cursor-pointer group"
                 >
-
                   <div
                     className={`p-2 rounded-2xl border transition-all ${
                       filtrosActivos.includes(img)
@@ -152,13 +122,11 @@ export default function ServiciosPage() {
                         : "border-slate-700 bg-slate-700/40 hover:border-slate-500"
                     }`}
                   >
-
                     <img
                       src={`/fotos_mapa/servicios/${img}`}
                       alt={img}
                       className="w-10 h-10 object-contain"
                     />
-
                   </div>
 
                   <span
@@ -168,15 +136,10 @@ export default function ServiciosPage() {
                         : "text-slate-400"
                     }`}
                   >
-
                     {ETIQUETAS_SERVICIOS[img] || "Servicio"}
-
                   </span>
-
                 </div>
-
               ))}
-
             </div>
 
           </div>
@@ -186,7 +149,5 @@ export default function ServiciosPage() {
       </div>
 
     </div>
-
   );
-
 }
