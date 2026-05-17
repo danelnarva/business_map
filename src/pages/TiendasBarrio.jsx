@@ -67,13 +67,21 @@ return (
     
     <div className="p-6">
 
-      <Link
-        to="/Tiendas"
-        className="inline-flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm"
-      >
-        <ArrowLeft size={18} />
-        Volver a Tiendas
+      <Link to="/" className="inline-block mb-6 hover:opacity-80 transition-opacity">
+        <h1 className="text-3xl font-bold text-white tracking-tight">
+          V-G BUSINESSMAP
+        </h1>
       </Link>
+
+      <div className="flex items-center justify-end mb-6 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 hover:shadow-md transition-all shadow-sm"
+        >
+          <ArrowLeft size={18} />
+          Volver al Inicio
+        </Link>
+      </div>
 
       <div className="mt-6 bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 shadow-xl">
         
