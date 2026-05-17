@@ -13,7 +13,7 @@ import "./App.css";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/business_map/">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/Barrios" element={<BarriosPage />} />

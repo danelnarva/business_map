@@ -67,9 +67,9 @@ export default function LandingPage() {
 
         {/* Patrocinadores en móvil (se muestra inline al final del scroll) */}
         <div className="mt-12 lg:hidden flex items-center justify-center gap-6 bg-white/95 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-white w-full max-w-sm mx-auto">
-          <img src="/ehu_upv.png" alt="UPV/EHU" className="h-8 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}ehu_upv.png`} alt="UPV/EHU" className="h-8 object-contain" />
           <div className="w-px h-10 bg-slate-200"></div>
-          <img src="/mobility_lab.png" alt="Mobility LAB Vitoria-Gasteiz" className="h-10 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}mobility_lab.png`} alt="Mobility LAB Vitoria-Gasteiz" className="h-10 object-contain" />
         </div>
 
       </div>
@@ -78,7 +78,7 @@ export default function LandingPage() {
       <div className="hidden lg:block lg:w-[55%] xl:w-[60%] relative">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/vitoria_bg.jpg')" }}
+          style={{ backgroundImage: `url('${import.meta.env.BASE_URL}vitoria_bg.jpg')` }}
         />
         <div className="absolute inset-0 bg-slate-900/10" />
         <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
@@ -88,7 +88,7 @@ export default function LandingPage() {
       <div className="hidden lg:flex absolute bottom-8 right-8 z-20 items-center gap-6 bg-white/95 backdrop-blur-md px-8 py-5 rounded-2xl shadow-2xl border border-white">
         <img src="/ehu_upv.png" alt="UPV/EHU" className="h-10 md:h-12 object-contain" />
         <div className="w-px h-12 bg-slate-200"></div>
-        <img src="/mobility_lab.png" alt="Mobility LAB Vitoria-Gasteiz" className="h-12 md:h-14 object-contain" />
+        <img src={`${import.meta.env.BASE_URL}mobility_lab.png`} alt="Mobility LAB Vitoria-Gasteiz" className="h-12 md:h-14 object-contain" />
       </div>
 
     </div>
