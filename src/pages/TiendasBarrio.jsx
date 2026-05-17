@@ -11,7 +11,7 @@ export default function TiendasBarrio() {
   const [mostrarTodos, setMostrarTodos] = useState(false);
 
   useEffect(() => {
-    fetch("/data/comercios_clasificados.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/comercios_clasificados.geojson`)
       .then(r => r.json())
       .then(data => {
         const filtradas = data.features.filter(t => {
@@ -26,7 +26,7 @@ export default function TiendasBarrio() {
         });
       });
 
-    fetch("/data/barrios.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/barrios.geojson`)
       .then(r => r.json())
       .then(data => {
         const barrio = data.features.find(

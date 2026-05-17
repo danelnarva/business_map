@@ -12,11 +12,11 @@ export default function TiendasPage() {
   const [barriosData, setBarriosData] = useState(null);
 
   useEffect(() => {
-    fetch("/data/comercios_clasificados.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/comercios_clasificados.geojson`)
       .then(res => res.json())
       .then(setTiendasData);
 
-    fetch("/data/barrios.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/barrios.geojson`)
       .then(res => res.json())
       .then(setBarriosData);
   }, []);

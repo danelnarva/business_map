@@ -34,9 +34,9 @@ export default function Barrios({ volver}) {
         setCargando(true);
 
         const [geojsonRes, indicadoresRes, historicoRes] = await Promise.all([
-          fetch("/data/barrios.geojson"),
-          fetch("/data/indicadores.json"),
-          fetch("/data/historico.json"),
+          fetch(`${import.meta.env.BASE_URL}data/barrios.geojson`),
+          fetch(`${import.meta.env.BASE_URL}data/indicadores.json`),
+          fetch(`${import.meta.env.BASE_URL}data/historico.json`),
         ]);
 
         if (!geojsonRes.ok || !indicadoresRes.ok || !historicoRes.ok) {

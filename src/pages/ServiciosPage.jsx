@@ -12,11 +12,11 @@ export default function ServiciosPage() {
   const [barriosData, setBarriosData] = useState(null);
 
   useEffect(() => {
-    fetch("/data/servicios_clasificados.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/servicios_clasificados.geojson`)
       .then(res => res.json())
       .then(setServiciosData);
 
-    fetch("/data/barrios.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/barrios.geojson`)
       .then(res => res.json())
       .then(setBarriosData);
   }, []);

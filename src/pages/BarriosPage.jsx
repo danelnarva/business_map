@@ -28,7 +28,7 @@ export default function BarriosPage() {
       try {
         setCargando(true);
 
-        const geojsonRes = await fetch("/data/barrios_con_datos.geojson");
+        const geojsonRes = await fetch(`${import.meta.env.BASE_URL}data/barrios_con_datos.geojson`);
 
         if (!geojsonRes.ok) {
           throw new Error("No se pudieron cargar los datos.");

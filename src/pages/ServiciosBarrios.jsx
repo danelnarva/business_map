@@ -11,7 +11,7 @@ export default function ServiciosBarrios() {
   const [mostrarTodos, setMostrarTodos] = useState(false);
 
   useEffect(() => {
-    fetch("/data/servicios_clasificados.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/servicios_clasificados.geojson`)
       .then(r => r.json())
       .then(data => {
         const filtrados = data.features.filter(s => {
@@ -26,7 +26,7 @@ export default function ServiciosBarrios() {
         });
       });
 
-    fetch("/data/barrios.geojson")
+    fetch(`${import.meta.env.BASE_URL}data/barrios.geojson`)
       .then(r => r.json())
       .then(data => {
         const barrio = data.features.find(
