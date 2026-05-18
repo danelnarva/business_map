@@ -68,6 +68,7 @@ export default function TiendasPage() {
           >
             Mapas de calor
           </Link>
+.
 
           <Link
             to="/"

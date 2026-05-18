@@ -3,12 +3,21 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+
 export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.js",
+      registerType: "autoUpdate",
+      injectRegister: "auto",
+      includeAssets: [
+        "favicon.ico",
+        "logo_vg.png"
+      ],
       manifest: {
         name: 'V-G Business Map',
         short_name: 'Business Map',
