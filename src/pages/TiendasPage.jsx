@@ -63,7 +63,7 @@ export default function TiendasPage() {
         <div className="flex items-center justify-between mb-8 bg-slate-800/50 px-6 py-5 rounded-2xl shadow-lg border border-slate-700 backdrop-blur-sm">
 
           <Link
-            to="/MapaCalor"
+            to="/MapaCalor"  state={{ from: "tiendas" }}
             className="flex items-center gap-2 text-sm font-bold text-orange-300 hover:text-white bg-orange-500/10 border border-orange-500/40 px-4 py-2 rounded-xl hover:bg-orange-500/20 transition-all"
           >
             Mapas de calor

@@ -43,6 +43,17 @@ const serviciosFiltrados = serviciosData?.features.filter(f => {
 
 });
 
+const serviciosValidos = serviciosData?.features.filter(f => {
+
+  const tipo = f.properties.amenity;
+
+  return (
+    diccionarioIconos[tipo] &&
+    f.properties.id_barrio !== null
+  );
+
+});
+
 const crearIcono = (tipoServicio) => {
   const nombreImagen =
     diccionarioIconos[tipoServicio] || "default.png";
@@ -83,6 +94,31 @@ function CentrarBarrio({ barrio }) {
   return null;
 }
 
+function obtenerColor(valor) {
+  return valor > 200
+    ? "#7f1d1d"
+    : valor > 150
+    ? "#991b1b"
+    : valor > 100
+    ? "#b91c1c"
+    : valor > 60
+    ? "#dc2626"
+    : valor > 30
+    ? "#ef4444"
+    : "#f87171";
+}
+
+const conteoBarrios = {};
+
+serviciosValidos?.forEach(t => {
+
+  const idBarrio = t.properties.id_barrio;
+
+  conteoBarrios[idBarrio] =
+    (conteoBarrios[idBarrio] || 0) + 1;
+
+});
+
   return (
     <MapContainer
       center={[42.8467, -2.6716]}
@@ -99,19 +135,76 @@ function CentrarBarrio({ barrio }) {
 )}
 
       {barriosData && !barrioSeleccionado && (
-        <GeoJSON
-          data={barriosData}
-          style={() => ({
-            color: "#555",
-            weight: 1.5,
-            fillOpacity: 0.2
-          })}
-          onEachFeature={(feature, layer) => {
-            layer.on("click", () => {
-              onBarrioClick(feature.properties);
-            });
-          }}
-        />
+<GeoJSON
+  data={barriosData}
+
+  style={(feature) => {
+
+    const idBarrio =
+      feature.properties.BARRIO;
+
+    const total =
+      conteoBarrios[idBarrio] || 0;
+
+    return {
+      fillColor: obtenerColor(total),
+      weight: 1.5,
+      opacity: 1,
+      color: "#475569",
+      dashArray: "2",
+      fillOpacity: 0.65
+    };
+  }}
+
+  onEachFeature={(feature, layer) => {
+
+    const idBarrio =
+      feature.properties.BARRIO;
+
+    const total =
+      conteoBarrios[idBarrio] || 0;
+
+    layer.bindTooltip(`
+      <div style="
+        font-family: sans-serif;
+        font-size: 13px;
+      ">
+        <strong>${feature.properties.TEXTO}</strong>
+        <br/>
+        ${total} servicios
+      </div>
+    `);
+
+    layer.on({
+
+      mouseover: (e) => {
+
+        e.target.setStyle({
+          weight: 3,
+          color: "#ffffff",
+          fillOpacity: 0.8
+        });
+
+      },
+
+      mouseout: (e) => {
+
+        e.target.setStyle({
+          weight: 1.5,
+          color: "#475569",
+          fillOpacity: 0.65
+        });
+
+      },
+
+      click: () => {
+        onBarrioClick(feature.properties);
+      }
+
+    });
+
+  }}
+/>
       )}
 
       {barrioSeleccionado && (

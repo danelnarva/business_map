@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, Flame } from "lucide-react";
 
 import MapaCalor from "../components/MapaCalor";
@@ -8,6 +8,10 @@ export default function MapaCalorPage() {
 
   const [tiendas, setTiendas] = useState(null);
   const [servicios, setServicios] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from;
 
   useEffect(() => {
 
@@ -37,13 +41,21 @@ export default function MapaCalorPage() {
             Mapas de Calor
           </h1>
 
-          <Link
-            to="/"
+          <button
+            onClick={() => {
+              if (from === "servicios") {
+                navigate("/servicios");
+              } else if (from === "tiendas") {
+                navigate("/tiendas");
+              } else {
+                navigate("/");
+              }
+            }}
             className="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl hover:bg-slate-700 transition-all"
           >
             <ArrowLeft size={18} />
-            Volver al Inicio
-          </Link>
+            Volver
+          </button> 
 
         </div>
 

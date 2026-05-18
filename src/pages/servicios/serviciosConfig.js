@@ -76,40 +76,40 @@ export const TRADUCCIONES_SERVICIOS = {
   parking_space: "Plaza de aparcamiento",
   parking_entrance: "Entrada parking",
 
-  driving_school: "Autoescuela",
+  driving_school: "Autoescuelas",
   driver_training: "Formación vial",
 
-  bank: "Banco",
+  bank: "Bancos",
 
   bar: "Bar",
   pub: "Pub",
-  biergarten: "Cervecería",
-  nightclub: "Discoteca",
+  biergarten: "Cervecerías",
+  nightclub: "Discotecas",
 
-  library: "Biblioteca",
-  public_bookcase: "Biblioteca pública",
-  archive: "Archivo",
+  library: "Bibliotecas",
+  public_bookcase: "Bibliotecas públicas",
+  archive: "Archivos",
 
-  atm: "Cajero automático",
+  atm: "Cajeros automáticos",
 
-  arts_centre: "Centro artístico",
-  theatre: "Teatro",
-  studio: "Estudio",
+  arts_centre: "Centros artísticos",
+  theatre: "Teatros",
+  studio: "Estudios",
 
-  community_centre: "Centro comunitario",
-  social_centre: "Centro social",
+  community_centre: "Centros comunitarios",
+  social_centre: "Centros sociales",
 
-  clinic: "Clínica",
-  doctors: "Centro médico",
-  hospital: "Hospital",
+  clinic: "Clínicas",
+  doctors: "Centro médicos",
+  hospital: "Hospitales",
 
-  cinema: "Cine",
+  cinema: "Cines",
 
-  school: "Colegio",
-  college: "Universidad",
-  kindergarten: "Guardería",
+  school: "Colegios",
+  college: "Universidades",
+  kindergarten: "Guarderías",
 
-  dentist: "Dentista",
+  dentist: "Dentistas",
 
   language_school: "Escuela idiomas",
   music_school: "Escuela música",
@@ -117,53 +117,53 @@ export const TRADUCCIONES_SERVICIOS = {
 
   charging_station: "Carga eléctrica",
 
-  pharmacy: "Farmacia",
-  herbalist: "Herbolario",
+  pharmacy: "Farmacias",
+  herbalist: "Herbolarios",
 
   childcare: "Jardín infancia",
 
-  casino: "Casino",
+  casino: "Casinos",
   gambling: "Juegos azar",
   bookmaker: "Apuestas",
 
   car_wash: "Lavado coches",
 
-  marketplace: "Mercado",
+  marketplace: "Mercados",
 
   post_office: "Correos",
   post_box: "Buzón",
   post_depot: "Centro postal",
 
-  restaurant: "Restaurante",
-  cafe: "Cafetería",
+  restaurant: "Restaurantes",
+  cafe: "Cafeterías",
   fast_food: "Comida rápida",
   food_court: "Zona comida",
-  ice_cream: "Heladería",
-  internet_cafe: "Cibercafé",
+  ice_cream: "Heladerías",
+  internet_cafe: "Cibercafés",
 
   place_of_worship: "Lugar culto",
 };
 
 export const ETIQUETAS_SERVICIOS = {
   "mapa_aparcamiento.jpg": "Parking",
-  "mapa_autoescuela.jpg": "Autoescuela",
-  "mapa_banco.jpg": "Banco",
+  "mapa_autoescuela.jpg": "Autoescuelas",
+  "mapa_banco.jpg": "Bancos",
   "mapa_bar.jpg": "Bar",
-  "mapa_biblioteca.jpg": "Biblioteca",
-  "mapa_cajero_automatico.jpg": "Cajero",
+  "mapa_biblioteca.jpg": "Bibliotecas",
+  "mapa_cajero_automatico.jpg": "Cajeros",
   "mapa_centro_arte.jpg": "Arte",
   "mapa_centro_comunitario.png": "Centro social",
   "mapa_centro_salud.jpg": "Salud",
-  "mapa_cine.jpg": "Cine",
-  "mapa_colegio.jpg": "Colegio",
-  "mapa_dentista.jpg": "Dentista",
+  "mapa_cine.jpg": "Cines",
+  "mapa_colegio.jpg": "Colegios",
+  "mapa_dentista.jpg": "Dentistas",
   "mapa_escuela_idiomas.jpg": "Idiomas",
   "mapa_estacion_carga.jpg": "Carga EV",
-  "mapa_farmacia.jpg": "Farmacia",
-  "mapa_jardin_infancia.jpg": "Guardería",
-  "mapa_juegos_azar.jpg": "Casino",
-  "mapa_lavado_coches.jpg": "Lavado",
-  "mapa_mercado.jpg": "Mercado",
+  "mapa_farmacia.jpg": "Farmacias",
+  "mapa_jardin_infancia.jpg": "Guarderías",
+  "mapa_juegos_azar.jpg": "Juegos azar",
+  "mapa_lavado_coches.jpg": "Lavados",
+  "mapa_mercado.jpg": "Mercados",
   "mapa_oficina_correos.jpg": "Correos",
   "mapa_pub.jpg": "Ocio"
 };

@@ -6,13 +6,10 @@ import {
 } from "react-leaflet";
 
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import L from "leaflet";
 import "leaflet.heat";
 
-/* =========================
-   🔥 HEAT LAYER
-========================= */
 function HeatLayer({ points }) {
   const map = useMap();
 
@@ -33,9 +30,6 @@ function HeatLayer({ points }) {
   return null;
 }
 
-/* =========================
-   🟦 BORDES DE BARRIOS
-========================= */
 function BarriosBorders({ data }) {
   if (!data) return null;
 
@@ -51,9 +45,6 @@ function BarriosBorders({ data }) {
   );
 }
 
-/* =========================
-   📱 FIX MÓVIL / PWA
-========================= */
 function FixMapResize() {
   const map = useMap();
 
@@ -68,19 +59,15 @@ function FixMapResize() {
   return null;
 }
 
-/* =========================
-   🗺 MAPA PRINCIPAL
-========================= */
+
 export default function MapaCalor({ data, barriosData }) {
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* 🔥 detectar origen */
   const params = new URLSearchParams(location.search);
   const from = params.get("from");
 
-  /* 🔥 puntos heatmap */
   const points =
     data?.features.map(f => [
       f.geometry.coordinates[1],
@@ -91,21 +78,7 @@ export default function MapaCalor({ data, barriosData }) {
   return (
     <div className="relative w-full h-[100dvh]">
 
-      {/* 🔙 BOTÓN VOLVER INTELIGENTE */}
-      <button
-        onClick={() => {
-          if (from === "servicios") {
-            navigate("/servicios");
-          } else {
-            navigate("/tiendas");
-          }
-        }}
-        className="absolute top-4 left-4 z-[1000] bg-slate-800 text-white px-4 py-2 rounded-xl border border-slate-600 hover:bg-slate-700 transition shadow-lg"
-      >
-        Volver
-      </button>
-
-      {/* 🗺 MAPA */}
+      {/* MAPA */}
       <MapContainer
         center={[42.8467, -2.6716]}
         zoom={13}
@@ -115,16 +88,12 @@ export default function MapaCalor({ data, barriosData }) {
         doubleClickZoom={true}
       >
 
-        {/* 🌍 base map */}
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        {/* 🔥 heatmap */}
         <HeatLayer points={points} />
 
-        {/* 🟦 barrios */}
         <BarriosBorders data={barriosData} />
 
-        {/* 📱 fix móvil PWA */}
         <FixMapResize />
 
       </MapContainer>
