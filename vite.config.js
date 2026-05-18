@@ -15,8 +15,7 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       injectRegister: "auto",
       includeAssets: [
-        "favicon.ico",
-        "logo_vg.png"
+        "logo_vg.png",
       ],
       manifest: {
         name: 'V-G Business Map',
